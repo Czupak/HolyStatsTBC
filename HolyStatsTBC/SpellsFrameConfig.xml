@@ -1,0 +1,59 @@
+<Ui>
+	<Script file="SpellsFrameConfig.lua"/>
+	<Frame name="SpellsFrameConfig" parent="UIParent" movable="true" resizable="true" frameStrata="LOW" toplevel="true" hidden="true">
+		<Size>
+			<AbsDimension x="300" y="500"/>
+		</Size>
+		<Anchors>
+			<Anchor point="TOP">
+				<!-- <Offset>
+					<AbsDimension x="20" y="20"/>
+				</Offset> -->
+			</Anchor>
+		</Anchors>
+		<Layers>
+			<Layer level="ARTWORK">
+				<Texture name="SpellsFrameConfigBG">
+					<Color r="0.5" g="0.5" b="1.0"/>
+					<Size>
+						<AbsDimension x="100" y="100"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT">
+						</Anchor>
+						<Anchor point="BOTTOMRIGHT">
+						</Anchor>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY">
+<!--                    ########################                 -->				
+				<Scripts>
+					<OnMouseDown>
+
+					</OnMouseDown>
+					<OnMouseUp>
+
+					</OnMouseUp>
+				</Scripts>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<!-- <OnLoad>
+                SpellsFrameConfig_OnLoad(self)
+			</OnLoad> -->
+			<OnUpdate>
+
+			</OnUpdate>
+			<OnEvent>
+
+			</OnEvent>
+			<OnMouseDown>
+                SpellsFrameConfig_OnMouseDown(self, button)
+			</OnMouseDown>
+			<OnMouseUp>
+                SpellsFrameConfig_OnMouseUp(self, button)
+			</OnMouseUp>
+		</Scripts>
+	</Frame>
+</Ui>
