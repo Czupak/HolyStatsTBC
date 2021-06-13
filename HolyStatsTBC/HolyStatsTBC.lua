@@ -203,7 +203,7 @@ function getTalentRank(talent)
 		['PALADIN'] = {
 			['Healing Light'] = {1,5},
 			['Illumination'] = {1,9},
-			['Holy Power'] = {1,13}
+			['Holy Power'] = {1,15}
 		}
 	}
 

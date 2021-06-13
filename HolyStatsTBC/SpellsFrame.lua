@@ -633,31 +633,41 @@ local healingSpells = {
 			},
 			['Rank 6'] = {
 				org = {
-					Min = 348,
-					Max = 389,
+					Min = 356,
+					Max = 396,
 					Mana = 140,
 					Cast = 1.5,
 					BaseCast = 1.5,
 					lvl = 58
+				}
+			},
+			['Rank 7'] = {
+				org = {
+					Min = 458,
+					Max = 513,
+					Mana = 180,
+					Cast = 1.5,
+					BaseCast = 1.5,
+					lvl = 66
 				}
 			}
 		},
 		['Holy Shock'] = {
 			['Rank 1'] = {
 				org = {
-					Min = 204,
-					Max = 220,
-					Mana = 225,
+					Min = 351,
+					Max = 379,
+					Mana = 335,
 					Cast = 1.5,
 					BaseCast = 1.5,
-					lvl = 40
+					lvl = 1
 				}
 			},
 			['Rank 2'] = {
 				org = {
-					Min = 279,
-					Max = 301,
-					Mana = 275,
+					Min = 480,
+					Max = 518,
+					Mana = 410,
 					Cast = 1.5,
 					BaseCast = 1.5,
 					lvl = 48
@@ -665,12 +675,32 @@ local healingSpells = {
 			},
 			['Rank 3'] = {
 				org = {
-					Min = 365,
-					Max = 395,
-					Mana = 325,
+					Min = 628,
+					Max = 680,
+					Mana = 485,
 					Cast = 1.5,
 					BaseCast = 1.5,
 					lvl = 56
+				}
+			},
+			['Rank 4'] = {
+				org = {
+					Min = 777,
+					Max = 841,
+					Mana = 575,
+					Cast = 1.5,
+					BaseCast = 1.5,
+					lvl = 46
+				}
+			},
+			['Rank 5'] = {
+				org = {
+					Min = 913,
+					Max = 987,
+					Mana = 650,
+					Cast = 1.5,
+					BaseCast = 1.5,
+					lvl = 70
 				}
 			}
 		},
@@ -707,7 +737,7 @@ local healingSpells = {
 			},
 			['Rank 4'] = {
 				org = {
-					Min = 332,
+					Min = 322,
 					Max = 368,
 					Mana = 190,
 					Cast = 2.5,
@@ -754,7 +784,37 @@ local healingSpells = {
 					BaseCast = 2.5,
 					lvl = 54
 				}
-			}
+			},
+			['Rank 9'] = {
+				org = {
+					Min = 1619,
+					Max = 1799,
+					Mana = 660,
+					Cast = 2.5,
+					BaseCast = 2.5,
+					lvl = 60
+				}
+			},
+			['Rank 10'] = {
+				org = {
+					Min = 1773,
+					Max = 1971,
+					Mana = 710,
+					Cast = 2.5,
+					BaseCast = 2.5,
+					lvl = 62
+				}
+			},
+			['Rank 11'] = {
+				org = {
+					Min = 2196,
+					Max = 2446,
+					Mana = 840,
+					Cast = 2.5,
+					BaseCast = 2.5,
+					lvl = 70
+				}
+			},
 		}
 	}
 }

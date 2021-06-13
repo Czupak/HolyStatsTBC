@@ -1,8 +1,8 @@
 ## Interface: 20501
 ## Title: HolyStats TBC
-## Notes: MP5, Healing Bonus and detailed Healing Spells' stats for Priests
+## Notes: MP5, Healing Bonus and detailed Healing Spells' stats for Priests and Paladins
 ## Author: Czupak
-## Version: 1.1
+## Version: 1.2
 ## SavedVariablesPerCharacter: myIgnoredSpells config
 HolyStatsTBC.xml
 SpellsFrame.xml
