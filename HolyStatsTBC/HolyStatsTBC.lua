@@ -34,6 +34,15 @@ function HolyStats_OnLoad(self)
 	HolyStatsBG:SetVertexColor(0.2, 0.2, 0.2)
 	HolyStatsFrame:SetMinResize(20,20)
 	HolyStatsFrame:SetClampedToScreen(true)
+	
+	local btn_toggle = CreateFrame("Button", nil, HolyStatsFrame,"UIPanelButtonTemplate")
+	btn_toggle:SetPoint("TOPLEFT", -20, 1)
+	btn_toggle:SetScript("OnClick", function()
+		toggleSpellsFrame()
+	end)
+	btn_toggle:SetText('?')
+	btn_toggle:SetWidth(20)
+
 	delay = 0
 end
 
@@ -147,18 +156,22 @@ function HolyStats_OnMouseDown(self, button)
 		self.isSizing = true
 		return
 	elseif button == "MiddleButton" then
-		if isSpellsFrame
-		then
-			hideSpellsFrame()
-		else
-			showSpellsFrame()
-		end
+		toggleSpellsFrame()
 	end
 end
 
 function HolyStats_OnMouseUp(self, button)
 	self:StopMovingOrSizing()
 	pauseUpdate = false
+end
+
+function toggleSpellsFrame()
+	if isSpellsFrame
+	then
+		hideSpellsFrame()
+	else
+		showSpellsFrame()
+	end
 end
 
 function showSpellsFrame()
@@ -176,13 +189,16 @@ end
 function getTalentRank(talent)
 	local talents = {
 		['PRIEST'] = {
-			['Spiritual Healing'] = {2,15},
+			['Spiritual Healing'] = {2,16},
 			['Improved Healing'] = {2,10},
 			['Improved Renew'] = {2,2},
-			['Mental Agility'] = {1,10},
+			['Mental Agility'] = {1,11},
 			['Holy Specialization'] = {2,3},
-			['Meditation'] = {1,8},
-			['Improved Prayer of Healing'] = {2,12}
+			['Meditation'] = {1,9},
+			['Improved Prayer of Healing'] = {2,12},
+			['Divine Fury'] = {2,5},
+			['Empowered Healing'] = {2,20},
+			['Circle of Healing'] = {2,21}
 		},
 		['PALADIN'] = {
 			['Healing Light'] = {1,5},

@@ -1,6 +1,76 @@
 local cache = {}
 local healingSpells = {
 	['PRIEST'] = {
+		['Circle of Healing'] ={
+			['Rank 1'] = {
+				org = {
+					Min = 250,
+					Max = 274,
+					Mana = 300,
+					Cast = 0,
+					BaseCast = 0,
+					lvl = 70,
+					targets = 5
+				}
+			},
+			['Rank 2'] = {
+				org = {
+					Min = 292,
+					Max = 323,
+					Mana = 337,
+					Cast = 0,
+					BaseCast = 0,
+					lvl = 70,
+					targets = 5
+				}
+			},
+			['Rank 3'] = {
+				org = {
+					Min = 332,
+					Max = 367,
+					Mana = 375,
+					Cast = 0,
+					BaseCast = 0,
+					lvl = 70,
+					targets = 5
+				}
+			},
+			['Rank 4'] = {
+				org = {
+					Min = 376,
+					Max = 415,
+					Mana = 411,
+					Cast = 0,
+					BaseCast = 0,
+					lvl = 70,
+					targets = 5
+				}
+			},
+			['Rank 5'] = {
+				org = {
+					Min = 409,
+					Max = 451,
+					Mana = 450,
+					Cast = 0,
+					BaseCast = 0,
+					lvl = 70,
+					targets = 5
+				}
+			},
+		},
+		['Binding Heal'] = {
+			['Rank 1'] = {
+				org = {
+					Min = 1053,
+					Max = 1350,
+					Mana = 705,
+					Cast = 1.5,
+					BaseCast = 1.5,
+					lvl = 70,
+					targets = 2
+				}
+			}
+		},
 		['Lesser Heal'] = {
 			['Rank 1'] = {
 				org = {
@@ -690,7 +760,7 @@ local healingSpells = {
 }
 
 local sortBy = 'eff'
-local sortOrder = 1
+local sortOrder = 0
 local _, class = UnitClass("player")
 
 function SpellsFrame_OnLoad(self)
@@ -699,13 +769,22 @@ function SpellsFrame_OnLoad(self)
 	self:SetClampedToScreen(true)
 	local offset = 0
 
-	local btn = CreateFrame("Button", nil, self,"UIPanelButtonTemplate")
-		btn:SetPoint("TOPLEFT", -20, 1)
-		btn:SetScript("OnClick", function()
-			toggleSpellsFrameConfig()
-		end)
-	btn:SetText('?')
-	btn:SetWidth(20)
+	local btn_toggle = CreateFrame("Button", nil, SpellsFrame,"UIPanelButtonTemplate")
+	btn_toggle:SetPoint("TOPLEFT", -20, 1)
+	btn_toggle:SetScript("OnClick", function()
+		toggleSpellsFrameConfig()
+	end)
+	btn_toggle:SetText('?')
+	btn_toggle:SetWidth(20)
+
+	local btn_close = CreateFrame("Button", nil, SpellsFrame, "UIPanelButtonTemplate")
+	btn_close:SetPoint("TOPLEFT", -20, -21)
+	btn_close:SetScript("OnClick", function()
+		toggleSpellsFrame()
+	end)
+	btn_close:SetText('x')
+	btn_close:SetWidth(20)
+
 	local columns = {
 		{ name = 'spell', width = 110 },
 		{ name = 'rank', width = 50 },

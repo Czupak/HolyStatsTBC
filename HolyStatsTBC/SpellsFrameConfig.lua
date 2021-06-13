@@ -19,6 +19,15 @@ end
 function SpellsFrameConfig_OnLoad(self)
 	self:SetMinResize(20,20)
 	self:SetClampedToScreen(true)
+
+	local btn_close = CreateFrame("Button", nil, SpellsFrameConfig, "UIPanelButtonTemplate")
+	btn_close:SetPoint("TOPLEFT", 0, 1)
+	btn_close:SetScript("OnClick", function()
+		toggleSpellsFrameConfig()
+	end)
+	btn_close:SetText('x')
+	btn_close:SetWidth(20)
+
 	if myIgnoredSpells == nil
 	then
 		myIgnoredSpells = {}
@@ -113,16 +122,16 @@ function SpellsFrameConfig_Fill(self)
 			do
 				if spells[spell][rank] ~= nil
 				then
-					local btn = CreateFrame("CheckButton", spell .. rank, self ,"UICheckButtonTemplate")
-					btn:SetPoint("TOPLEFT", offsetX + 15, offsetY)
-					btn:SetScript("OnClick", function(self)
+					local btn_check = CreateFrame("CheckButton", spell .. rank, self ,"UICheckButtonTemplate")
+					btn_check:SetPoint("TOPLEFT", offsetX + 15, offsetY)
+					btn_check:SetScript("OnClick", function(self)
 						local lSpell = spell
 						local lRank = rank
 						toggleSpellIgnore(spell, rank)
 					end)
-					btn:SetChecked(not isSpellIgnored(spell, rank))
-					btn:SetWidth(20)
-					btn:SetHeight(20)
+					btn_check:SetChecked(not isSpellIgnored(spell, rank))
+					btn_check:SetWidth(20)
+					btn_check:SetHeight(20)
 				end
 				offsetX = offsetX + 50
 			end
