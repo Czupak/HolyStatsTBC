@@ -20,10 +20,30 @@ function frame:OnEvent(event, arg1)
 		then
 			config = {}
 		end
-		if config['sim'] == null
+		if config['sim'] == nil
 		then
 			config['sim'] = {}
 		end
+		if config['ui'] == nil
+		then
+		    config['ui'] = {}
+		end
+
+--         config['ui']['mainWindowFont'] = 10
+--         config['ui']['mainWindowAlpha'] = 10
+--         config['ui']['spellsWindowFont'] = 10
+        for i, key in pairs({'mainWindowFont', 'mainWindowAlpha', 'spellsWindowFont'}) do
+            if config['ui'][key] == nil
+            then
+                if key == 'mainWindowAlpha'
+                then
+                    config['ui'][key] = 20
+                else
+                    config['ui'][key] = 12
+                end
+            end
+        end
+
 		HolyStats_OnLoad(HolyStats)
 		SpellsFrameConfig_OnLoad(SpellsFrameConfig)
 	end
@@ -31,7 +51,7 @@ end
 frame:SetScript("OnEvent", frame.OnEvent);
 
 function HolyStats_OnLoad(self)
-	HolyStatsBG:SetVertexColor(0.2, 0.2, 0.2)
+	HolyStatsBG:SetVertexColor(0.2, 0.2, 0.2, config['ui']['mainWindowAlpha'])
 	HolyStatsFrame:SetMinResize(20,20)
 	HolyStatsFrame:SetClampedToScreen(true)
 	
@@ -129,11 +149,8 @@ ItemHealBonus: %d]]
 	HolyStatsText:SetText(string.format( tmpl, percent, fullin, delay, regen*5, itemRegen + casting*5, bonusHealing, crit, itemRegen, itemBonus))
 
 	local fontName, fontHeight, fontFlags = HolyStatsText:GetFont()
-	if config['fontSize'] == nil
-	then
-		config['fontSize'] = fontHeight
-	end
-	HolyStatsText:SetFont(fontName, config['fontSize'])
+	HolyStatsText:SetFont(fontName, config['ui']['mainWindowFont'])
+	HolyStatsBG:SetVertexColor(0.2, 0.2, 0.2, config['ui']['mainWindowAlpha'] / 20)
 
 	-- local posX, posY = HolyStatsFrame:GetLeft(), HolyStatsFrame:GetTop()
 	-- local width = HolyStatsText:GetStringWidth()

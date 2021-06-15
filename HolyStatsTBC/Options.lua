@@ -41,54 +41,45 @@ optionsFrame:SetScript("OnShow", function(optionsFrame)
         -- sl:Enable()
         sl:SetWidth(250)
         sl:SetHeight(4)
-        sl:SetValue(config[configKey])
+        sl:SetValue(config['ui'][configKey])
         sl:SetScript("OnValueChanged", function(self)
 			local val = self:GetValue()
             onClick(self, val)
         end)
 		return sl
 	end
-    
+
+	local function optionSlider(text, refPoint, name, configKey)
+        local label = optionsFrame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+        label:SetPoint("TOPLEFT", refPoint, "BOTTOMLEFT", 0, -20)
+        label:SetText(text)
+        local slider = newSlider(
+            name,
+            configKey,
+            function(self, value)
+                if value ~= nil and value > 0
+                then
+                    config['ui'][configKey] = math.floor(value + 0.50)
+                    self:SetValue(config['ui'][configKey])
+                end
+            end)
+        slider:SetPoint("TOPLEFT", label, "BOTTOMLEFT", 0, -10)
+        return slider
+	end
+
+    -- HEADER
 	local title = optionsFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
 	title:SetPoint("TOPLEFT", 16, -16)
 	title:SetText(addonName)
 
-    local fontLabel = optionsFrame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-	fontLabel:SetPoint("TOPLEFT", title, "BOTTOMLEFT", -2, -16)
-	fontLabel:SetText("Main Window Font Size")
-	local fontSlider = newSlider(
-		"fontSlider",
-		'fontSize',
-        function(self, value)
-            if value ~= nil and value > 0
-            then
-                config['fontSize'] = math.floor(value + 0.50)
-                self:SetValue(config['fontSize'])
-            end
-        end)
-	fontSlider:SetPoint("TOPLEFT", fontLabel, "BOTTOMLEFT", 0, -10)
+    -- Sliders
+    local anchor = optionSlider("Main Window Font Size", title, 'mwfSlider', 'mainWindowFont')
+    anchor = optionSlider("Main Window Aplha", anchor, 'mwaSlider', 'mainWindowAlpha')
+    anchor = optionSlider("Spells Font Size", anchor, "swfSlider", "spellsWindowFont")
 
-    if config['fontSizeSpell'] == nil
-    then
-        config['fontSizeSpell'] = 10
-    end
-    local spellFontLabel = optionsFrame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-	spellFontLabel:SetPoint("TOPLEFT", fontLabel, "BOTTOMLEFT", 0, -30)
-	spellFontLabel:SetText("Spells Font Size")
-	local spellsFontSlider = newSlider(
-		"fontSpellsSlider",
-		"fontSizeSpell",
-        function(self, value)
-            if value ~= nil and value > 0
-            then
-                config['fontSizeSpell'] = math.floor(value + 0.50)
-                self:SetValue(config['fontSizeSpell'])
-            end
-        end)
-    spellsFontSlider:SetPoint("TOPLEFT", spellFontLabel, "BOTTOMLEFT", 0, -10)
-
+    -- Reset window size and position
     local resetButton = CreateFrame("Button", "ResetButtonFrame", optionsFrame, "UIPanelButtonTemplate")
-	resetButton:SetPoint("TOPLEFT", spellsFontSlider, "BOTTOMLEFT", 0, -8)
+	resetButton:SetPoint("TOPLEFT", anchor, "BOTTOMLEFT", 0, -8)
 	resetButton:SetScript("OnClick", function()
 		resetPosition()
 	end)
@@ -138,7 +129,7 @@ optionsFrame:SetScript("OnShow", function(optionsFrame)
 
     local list = optionsFrame:CreateFontString('SimulateTalentList', "ARTWORK", "GameFontNormalSmall")
     list:SetPoint("TOPLEFT", dropdown, "BOTTOMLEFT", 8, -8)
-    list:SetTextColor(1,1,1)
+    list:SetTextColor(1 ,1 ,1)
 	if(isTalentSim('Improved Renew'))
     then
         list:SetText('Improved Renew')

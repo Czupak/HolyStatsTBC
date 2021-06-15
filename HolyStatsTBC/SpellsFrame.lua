@@ -1202,21 +1202,16 @@ function printData(data)
 	SpellsFrameTextHBp1:SetText(table.concat(col['hbp'], "\n"))
 
 	local fontName, fontHeight, fontFlags = SpellsFrameTextSpell1:GetFont()
-	if config['fontSizeSpell'] == nil
-	then
-		config['fontSizeSpell'] = fontHeight
-	end
-
-	SpellsFrameTextSpell1:SetFont(fontName, config['fontSizeSpell'])
-	SpellsFrameTextRank1:SetFont(fontName, config['fontSizeSpell'])
-	SpellsFrameTextMana1:SetFont(fontName, config['fontSizeSpell'])
-	SpellsFrameTextMin1:SetFont(fontName, config['fontSizeSpell'])
-	SpellsFrameTextMax1:SetFont(fontName, config['fontSizeSpell'])
-	SpellsFrameTextAvg1:SetFont(fontName, config['fontSizeSpell'])
-	SpellsFrameTextEff1:SetFont(fontName, config['fontSizeSpell'])
-	SpellsFrameTextHBCoeff1:SetFont(fontName, config['fontSizeSpell'])
-	SpellsFrameTextHB1:SetFont(fontName, config['fontSizeSpell'])
-	SpellsFrameTextHBp1:SetFont(fontName, config['fontSizeSpell'])
+	SpellsFrameTextSpell1:SetFont(fontName, config['ui']['spellsWindowFont'])
+	SpellsFrameTextRank1:SetFont(fontName, config['ui']['spellsWindowFont'])
+	SpellsFrameTextMana1:SetFont(fontName, config['ui']['spellsWindowFont'])
+	SpellsFrameTextMin1:SetFont(fontName, config['ui']['spellsWindowFont'])
+	SpellsFrameTextMax1:SetFont(fontName, config['ui']['spellsWindowFont'])
+	SpellsFrameTextAvg1:SetFont(fontName, config['ui']['spellsWindowFont'])
+	SpellsFrameTextEff1:SetFont(fontName, config['ui']['spellsWindowFont'])
+	SpellsFrameTextHBCoeff1:SetFont(fontName, config['ui']['spellsWindowFont'])
+	SpellsFrameTextHB1:SetFont(fontName, config['ui']['spellsWindowFont'])
+	SpellsFrameTextHBp1:SetFont(fontName, config['ui']['spellsWindowFont'])
 	-- SpellsFrameBG:SetWidth( 8 * 40 + 160 )
 	-- print('W: ' .. tostring(8 * 40 + 160))
 	-- print('H: ' .. tostring(SpellsFrameTextSpell1:GetHeight()))
