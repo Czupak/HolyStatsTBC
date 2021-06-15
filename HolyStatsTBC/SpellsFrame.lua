@@ -10,7 +10,8 @@ local healingSpells = {
 					Cast = 0,
 					BaseCast = 1.5,
 					lvl = 68,
-					targets = 5
+					targets = 5,
+					instant = true
 				}
 			},
 	    },
@@ -23,7 +24,8 @@ local healingSpells = {
 					Cast = 0,
 					BaseCast = 1.5,
 					lvl = 70,
-					targets = 5
+					targets = 5,
+					instant = true
 				}
 			},
 			['Rank 2'] = {
@@ -34,7 +36,8 @@ local healingSpells = {
 					Cast = 0,
 					BaseCast = 1.5,
 					lvl = 70,
-					targets = 5
+					targets = 5,
+					instant = true
 				}
 			},
 			['Rank 3'] = {
@@ -45,7 +48,8 @@ local healingSpells = {
 					Cast = 0,
 					BaseCast = 1.5,
 					lvl = 70,
-					targets = 5
+					targets = 5,
+					instant = true
 				}
 			},
 			['Rank 4'] = {
@@ -56,7 +60,8 @@ local healingSpells = {
 					Cast = 0,
 					BaseCast = 1.5,
 					lvl = 70,
-					targets = 5
+					targets = 5,
+					instant = true
 				}
 			},
 			['Rank 5'] = {
@@ -67,7 +72,8 @@ local healingSpells = {
 					Cast = 0,
 					BaseCast = 1.5,
 					lvl = 70,
-					targets = 5
+					targets = 5,
+					instant = true
 				}
 			},
 		},
@@ -330,7 +336,8 @@ local healingSpells = {
 					Mana = 30,
 					Cast = 0,
 					BaseCast = 15,
-					lvl = 8
+					lvl = 8,
+					instant = true
 				}
 			},
 			['Rank 2'] = {
@@ -340,7 +347,8 @@ local healingSpells = {
 					Mana = 65,
 					Cast = 0,
 					BaseCast = 15,
-					lvl = 14
+					lvl = 14,
+					instant = true
 				}
 			},
 			['Rank 3'] = {
@@ -350,7 +358,8 @@ local healingSpells = {
 					Mana = 105,
 					Cast = 0,
 					BaseCast = 15,
-					lvl = 20
+					lvl = 20,
+					instant = true
 				}
 			},
 			['Rank 4'] = {
@@ -360,7 +369,8 @@ local healingSpells = {
 					Mana = 140,
 					Cast = 0,
 					BaseCast = 15,
-					lvl = 26
+					lvl = 26,
+					instant = true
 				}
 			},
 			['Rank 5'] = {
@@ -370,7 +380,8 @@ local healingSpells = {
 					Mana = 170,
 					Cast = 0,
 					BaseCast = 15,
-					lvl = 32
+					lvl = 32,
+					instant = true
 				}
 			},
 			['Rank 6'] = {
@@ -380,7 +391,8 @@ local healingSpells = {
 					Mana = 205,
 					Cast = 0,
 					BaseCast = 15,
-					lvl = 38
+					lvl = 38,
+					instant = true
 				}
 			},
 			['Rank 7'] = {
@@ -390,7 +402,8 @@ local healingSpells = {
 					Mana = 250,
 					Cast = 0,
 					BaseCast = 15,
-					lvl = 44
+					lvl = 44,
+					instant = true
 				}
 			},
 			['Rank 8'] = {
@@ -400,7 +413,8 @@ local healingSpells = {
 					Mana = 305,
 					Cast = 0,
 					BaseCast = 15,
-					lvl = 50
+					lvl = 50,
+					instant = true
 				}
 			},
 			['Rank 9'] = {
@@ -410,7 +424,8 @@ local healingSpells = {
 					Mana = 365,
 					Cast = 0,
 					BaseCast = 15,
-					lvl = 56
+					lvl = 56,
+					instant = true
 				}
 			},
 			['Rank 10'] = {
@@ -420,7 +435,8 @@ local healingSpells = {
 					Mana = 410,
 					Cast = 0,
 					BaseCast = 15,
-					lvl = 60
+					lvl = 60,
+					instant = true
 				}
 			},
 			['Rank 11'] = {
@@ -430,7 +446,8 @@ local healingSpells = {
 					Mana = 430,
 					Cast = 0,
 					BaseCast = 15,
-					lvl = 65
+					lvl = 65,
+					instant = true
 				}
 			},
 			['Rank 12'] = {
@@ -440,7 +457,8 @@ local healingSpells = {
 					Mana = 450,
 					Cast = 0,
 					BaseCast = 15,
-					lvl = 70
+					lvl = 70,
+					instant = true
 				}
 			},
 		},
@@ -521,7 +539,8 @@ local healingSpells = {
 					Cast = 1.5,
 					BaseCast = 1.5,
 					lvl = 68,
-					targets = 5
+					targets = 5,
+					instant = true
 				}
 			},
 			['Rank 6'] = {
@@ -532,7 +551,8 @@ local healingSpells = {
 					Cast = 1.5,
 					BaseCast = 1.5,
 					lvl = 60,
-					targets = 5
+					targets = 5,
+					instant = true
 				}
 			},
 			['Rank 5'] = {
@@ -543,7 +563,8 @@ local healingSpells = {
 					Cast = 1.5,
 					BaseCast = 1.5,
 					lvl = 52,
-					targets = 5
+					targets = 5,
+					instant = true
 				}
 			},
 			['Rank 4'] = {
@@ -554,7 +575,8 @@ local healingSpells = {
 					Cast = 1.5,
 					BaseCast = 1.5,
 					lvl = 44,
-					targets = 5
+					targets = 5,
+					instant = true
 				}
 			},
 			['Rank 3'] = {
@@ -565,7 +587,8 @@ local healingSpells = {
 					Cast = 1.5,
 					BaseCast = 1.5,
 					lvl = 36,
-					targets = 5
+					targets = 5,
+					instant = true
 				}
 			},
 			['Rank 2'] = {
@@ -576,7 +599,8 @@ local healingSpells = {
 					Cast = 1.5,
 					BaseCast = 1.5,
 					lvl = 28,
-					targets = 5
+					targets = 5,
+					instant = true
 				}
 			},
 			['Rank 1'] = {
@@ -587,7 +611,8 @@ local healingSpells = {
 					Cast = 1.5,
 					BaseCast = 1.5,
 					lvl = 20,
-					targets = 5
+					targets = 5,
+					instant = true
 				}
 			},
 		}
@@ -959,13 +984,14 @@ function sortKeys(data)
 end
 
 function calculateSpells()
+    -- Holy Specialization - spell crit %1 * 5
 	-- Mental Agility - instant casts 2% * 5
 	-- Improved Renew - renew 5% * 3
 	-- Improved Healing - mana cost Lesser Heal, Heal, Greater Heal 5% * 3
 	-- Improved Prayer of Healing - mana cost Prayer of Healing 10% * 2
 	-- Spiritual Guidance - healing by 5% * 5 of Spirit [included in bonus healing]
 	-- Spritual Healing - healing spells 2% * 5
-	-- Empowered Healing - Greater Heal +20% hb; Flash Heal and Binding Heal +10% hb
+	-- Empowered Healing - Greater Heal +4% * 5 hb; Flash Heal and Binding Heal +2% * 5 hb
 	local bonus = 0
 	local talentRank = getTalentRank('Spiritual Healing')
 	if talentRank > 0
@@ -994,13 +1020,6 @@ function calculateSpells()
 		renew = 0.05 * talentRank
 	end
 
-	local instantMana = 0
-	talentRank = getTalentRank('Mental Agility')
-	if talentRank > 0
-	then
-		instantMana = 0.02 * talentRank
-	end
-
 	local data = healingSpells
 	for spell, ranks in pairs(healingSpells[class])
 	do
@@ -1009,15 +1028,11 @@ function calculateSpells()
 			local mana = obj['org']['Mana']
 			if spell == 'Heal' or spell == 'Lesser Heal' or spell == 'Greater Heal'
 			then
-				mana = obj['org']['Mana']*(1-manaCost)
+				mana = mana * (1-manaCost)
 			end
-			if spell == 'Prayer of Healing'
+			if spell == 'Prayer of Healing' or spell == 'Prayer of Mending'
 			then
-				mana = obj['org']['Mana'] * (1 - getTalentRank('Improved Prayer of Healing') * 0.1)
-			end
-			if spell == 'Holy Nova'
-			then
-				mana = obj['org']['Mana']*(1-instantMana)
+				mana = mana * (1 - getTalentRank('Healing Prayers') * 0.1)
 			end
 
 			local xMin = obj['org']['Min']
@@ -1028,9 +1043,13 @@ function calculateSpells()
 				xMax = xMax*(1+bonus)
 			end
 
+            if obj['org']['instant'] ~= nil
+            then
+   				mana = mana * (1 - 0.02 * getTalentRank('Mental Agility'))
+            end
+
 			if spell == 'Renew'
 			then
-				mana = obj['org']['Mana']*(1-instantMana)
 				xMin = obj['org']['Min']*(1+bonus+renew)
 				xMax = obj['org']['Max']*(1+bonus+renew)
 			end
@@ -1101,7 +1120,19 @@ function getSpells(spells)
 			then
 				local meta = spells[spell][rank]
 				local hb = 0
+
+				-- Healing Bonus
 				local bonusHealing = GetSpellBonusHealing()
+				if spell == 'Greater Heal'
+				then
+				    bonusHealing = bonusHealing + bonusHealing * getTalentRank('Empowered Healing') * 0.04
+				end
+				if spell == 'Flash Heal' or spell == 'Binding Heal'
+				then
+				    bonusHealing = bonusHealing + bonusHealing * getTalentRank('Empowered Healing') * 0.02
+				end
+
+				-- Coefficiency
 				local coeff = meta.BaseCast / 3.5
 				if spell == 'Renew'
 				then
@@ -1115,12 +1146,14 @@ function getSpells(spells)
 				then
 					coeff = coeff / 3 / 2
 				end
+				-- Level penality
 				local lvlPenality = 1
 				if meta.lvl < 20
 				then
 					lvlPenality = 1 - ((20 - meta.lvl) * 0.0375)
 				end
 				coeff = coeff * lvlPenality
+
 				local mana = math.ceil(meta.Mana)
 				hbp = bonusHealing * coeff
 				

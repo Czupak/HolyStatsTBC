@@ -201,37 +201,39 @@ function hideSpellsFrame()
 	SpellsFrame:Hide()
 end
 
-
-
-function getTalentRank(talent)
+function getClassTalents()
 	local talents = {
 		['PRIEST'] = {
-			['Spiritual Healing'] = {2,16},
-			['Improved Healing'] = {2,10},
-			['Improved Renew'] = {2,2},
-			['Mental Agility'] = {1,11},
-			['Holy Specialization'] = {2,3},
-			['Meditation'] = {1,9},
-			['Improved Prayer of Healing'] = {2,12},
-			['Divine Fury'] = {2,5},
-			['Empowered Healing'] = {2,20},
-			['Circle of Healing'] = {2,21}
+			['Spiritual Healing'] = {2, 16, 5},
+			['Improved Healing'] = {2, 10, 3},
+			['Improved Renew'] = {2, 2, 3},
+			['Mental Agility'] = {1, 11, 5},
+			['Holy Specialization'] = {2, 3, 5},
+			['Meditation'] = {1, 9, 3},
+			['Healing Prayers'] = {2, 12, 2},
+			['Divine Fury'] = {2, 5, 5},
+			['Empowered Healing'] = {2, 20, 5},
+			['Circle of Healing'] = {2, 21, 1}
 		},
 		['PALADIN'] = {
-			['Healing Light'] = {1,5},
-			['Illumination'] = {1,9},
-			['Holy Power'] = {1,15}
+			['Healing Light'] = {1, 5, 3},
+			['Illumination'] = {1, 9, 5},
+			['Holy Power'] = {1, 15, 5}
 		}
 	}
+    return talents[class]
+end
 
-	if talents[class][talent] ~= nil 
+function getTalentRank(talent)
+	local talents = getClassTalents()
+	if talents[talent] ~= nil
 	then
 		if isTalentSim(talent)
 		then
-			return 3
+			return talents[talent][3]
 		end
 
-		local name, iconPath, tier, column, currentRank, maxRank, isExceptional, meetsPrereq = GetTalentInfo( talents[class][talent][1], talents[class][talent][2])
+		local name, iconPath, tier, column, currentRank, maxRank, isExceptional, meetsPrereq = GetTalentInfo( talents[talent][1], talents[talent][2])
 		if en(name) == talent and currentRank > 0
 		then
 			return currentRank
@@ -251,12 +253,21 @@ function toggleTalentSim(talent)
 end
 
 function isTalentSim(talent)
-	local r = false
 	if config['sim'][talent] == nil or config['sim'][talent] == false
 	then
-		r = false
+		return false
 	else
-		r = true
+		return true
 	end
-	return r
+end
+
+function getTalentSimString()
+    simArr = {}
+    for talent, value in pairs(config['sim']) do
+        if isTalentSim(talent)
+        then
+            table.insert(simArr, talent)
+        end
+    end
+    return table.concat(simArr, "\n")
 end
