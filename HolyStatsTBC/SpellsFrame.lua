@@ -1,6 +1,19 @@
 local cache = {}
 local healingSpells = {
 	['PRIEST'] = {
+	    ['Prayer of Mending'] = {
+			['Rank 1'] = {
+				org = {
+					Min = 800,
+					Max = 800,
+					Mana = 390,
+					Cast = 0,
+					BaseCast = 1.5,
+					lvl = 68,
+					targets = 5
+				}
+			},
+	    },
 		['Circle of Healing'] ={
 			['Rank 1'] = {
 				org = {
@@ -8,7 +21,7 @@ local healingSpells = {
 					Max = 274,
 					Mana = 300,
 					Cast = 0,
-					BaseCast = 0,
+					BaseCast = 1.5,
 					lvl = 70,
 					targets = 5
 				}
@@ -19,7 +32,7 @@ local healingSpells = {
 					Max = 323,
 					Mana = 337,
 					Cast = 0,
-					BaseCast = 0,
+					BaseCast = 1.5,
 					lvl = 70,
 					targets = 5
 				}
@@ -30,7 +43,7 @@ local healingSpells = {
 					Max = 367,
 					Mana = 375,
 					Cast = 0,
-					BaseCast = 0,
+					BaseCast = 1.5,
 					lvl = 70,
 					targets = 5
 				}
@@ -41,7 +54,7 @@ local healingSpells = {
 					Max = 415,
 					Mana = 411,
 					Cast = 0,
-					BaseCast = 0,
+					BaseCast = 1.5,
 					lvl = 70,
 					targets = 5
 				}
@@ -52,7 +65,7 @@ local healingSpells = {
 					Max = 451,
 					Mana = 450,
 					Cast = 0,
-					BaseCast = 0,
+					BaseCast = 1.5,
 					lvl = 70,
 					targets = 5
 				}
@@ -952,38 +965,40 @@ function calculateSpells()
 	-- Improved Prayer of Healing - mana cost Prayer of Healing 10% * 2
 	-- Spiritual Guidance - healing by 5% * 5 of Spirit [included in bonus healing]
 	-- Spritual Healing - healing spells 2% * 5
+	-- Empowered Healing - Greater Heal +20% hb; Flash Heal and Binding Heal +10% hb
 	local bonus = 0
-	local spellRank = getTalentRank('Spiritual Healing')
-	if spellRank > 0
+	local talentRank = getTalentRank('Spiritual Healing')
+	if talentRank > 0
 	then
-		bonus = 0.02 * spellRank
+		bonus = 0.02 * talentRank
 	end
 
-	local spellRank = getTalentRank('Healing Light')
-	if spellRank > 0
+    -- Paladin
+	local talentRank = getTalentRank('Healing Light')
+	if talentRank > 0
 	then
-		bonus = 0.04 * spellRank
+		bonus = 0.04 * talentRank
 	end
 
 	local manaCost = 0
-	spellRank = getTalentRank('Improved Healing')
-	if spellRank > 0
+	talentRank = getTalentRank('Improved Healing')
+	if talentRank > 0
 	then
-		manaCost = 0.05 * spellRank
+		manaCost = 0.05 * talentRank
 	end
 
 	local renew = 0
-	spellRank = getTalentRank('Improved Renew')
-	if spellRank > 0
+	talentRank = getTalentRank('Improved Renew')
+	if talentRank > 0
 	then
-		renew = 0.05 * spellRank
+		renew = 0.05 * talentRank
 	end
 
 	local instantMana = 0
-	spellRank = getTalentRank('Mental Agility')
-	if spellRank > 0
+	talentRank = getTalentRank('Mental Agility')
+	if talentRank > 0
 	then
-		instantMana = 0.02 * spellRank
+		instantMana = 0.02 * talentRank
 	end
 
 	local data = healingSpells
