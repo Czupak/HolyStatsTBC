@@ -29,15 +29,15 @@ function frame:OnEvent(event, arg1)
 		    config['ui'] = {}
 		end
 
---         config['ui']['mainWindowFont'] = 10
---         config['ui']['mainWindowAlpha'] = 10
---         config['ui']['spellsWindowFont'] = 10
-        for i, key in pairs({'mainWindowFont', 'mainWindowAlpha', 'spellsWindowFont'}) do
+        for i, key in pairs({'mainWindowFont', 'mainWindowAlpha', 'spellsWindowFont', 'mainWindowBGColor', 'mainWindowFontColor'}) do
             if config['ui'][key] == nil
             then
-                if key == 'mainWindowAlpha'
-                then
-                    config['ui'][key] = 20
+                if key == 'mainWindowAlpha' then
+                    config['ui'][key] = 100
+                elseif key == 'mainWindowBGColor' then
+                    config['ui'][key] = {0.2, 0.2, 0.2, 1.0}
+                elseif key == 'mainWindowFontColor' then
+                    config['ui'][key] = {1, 1, 1, 1}
                 else
                     config['ui'][key] = 12
                 end
@@ -51,10 +51,11 @@ end
 frame:SetScript("OnEvent", frame.OnEvent);
 
 function HolyStats_OnLoad(self)
-	HolyStatsBG:SetVertexColor(0.2, 0.2, 0.2, config['ui']['mainWindowAlpha'])
+    bgColor = config['ui']['mainWindowBGColor']
+	HolyStatsBG:SetVertexColor(bgColor[1], bgColor[2], bgColor[3], config['ui']['mainWindowAlpha'])
 	HolyStatsFrame:SetMinResize(20,20)
 	HolyStatsFrame:SetClampedToScreen(true)
-	
+
 	local btn_toggle = CreateFrame("Button", nil, HolyStatsFrame,"UIPanelButtonTemplate")
 	btn_toggle:SetPoint("TOPLEFT", -20, 1)
 	btn_toggle:SetScript("OnClick", function()
@@ -136,7 +137,7 @@ function HolyStats_update()
 			end
 		end
 	end
-	
+
 	tmpl = [[%d%% (%ds%s)
 
 MP5: %.1f
@@ -150,17 +151,6 @@ ItemHealBonus: %d]]
 
 	local fontName, fontHeight, fontFlags = HolyStatsText:GetFont()
 	HolyStatsText:SetFont(fontName, config['ui']['mainWindowFont'])
-	HolyStatsBG:SetVertexColor(0.2, 0.2, 0.2, config['ui']['mainWindowAlpha'] / 20)
-
-	-- local posX, posY = HolyStatsFrame:GetLeft(), HolyStatsFrame:GetTop()
-	-- local width = HolyStatsText:GetStringWidth()
-	-- local height = HolyStatsText:GetStringHeight()
-	-- HolyStatsFrame:SetWidth(width + 20)
-	-- HolyStatsFrame:SetHeight(height + 30)
-	-- print(posX)
-	-- print(posY)
-	-- HolyStatsFrame:ClearAllPoints()
-	-- HolyStatsFrame:SetPoint("TOPLEFT", posX, posY)
 end
 
 function HolyStats_OnMouseDown(self, button)
@@ -270,4 +260,14 @@ function getTalentSimString()
         end
     end
     return table.concat(simArr, "\n")
+end
+
+function resetPosition()
+    HolyStatsFrame:SetSize(150, 180)
+    HolyStatsFrame:ClearAllPoints()
+    HolyStatsFrame:SetPoint("TOPLEFT", "UIParent", "CENTER", -50, 50)
+    SpellsFrame:ClearAllPoints()
+    SpellsFrame:SetPoint("TOPLEFT", "UIParent", "CENTER", -50, 50)
+    SpellsFrameConfig:ClearAllPoints()
+    SpellsFrameConfig:SetPoint("TOPLEFT", "UIParent" ,"CENTER", -50, 50)
 end

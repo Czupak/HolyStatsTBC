@@ -1,6 +1,5 @@
 <Ui>
 	<Script file="Babel.lua"/>
-	<Script file="Options.lua"/>
 	<Script file="HolyStatsTBC.lua"/>
 
 	<Frame name="HolyStatsFrame" parent="UIParent" movable="true" resizable="true" frameStrata="LOW" toplevel="true" hidden="false">
