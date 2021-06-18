@@ -28,7 +28,7 @@
 				</Texture>
 			</Layer>
 			<Layer level="OVERLAY">
-<!--                    ########################                 -->				
+<!--                    ########################                 -->
 				<FontString name="$parentTextSpell1" inherits="GameFontNormalSmall">
 				<Size>
 					<AbsDimension x="100"/>
@@ -56,12 +56,26 @@
 				</Anchors>
 				</FontString>
 
+				<FontString name="$parentMark1" inherits="GameFontNormalSmall">
+				<Size>
+					<AbsDimension x="50"/>
+				</Size>
+				<Color r="0.8" g="0.8" b="0.8"/>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentTextRank1" relativePoint="TOPRIGHT">
+					<!-- <Offset>
+						<AbsDimension x="10" y="0"/>
+					</Offset> -->
+					</Anchor>
+				</Anchors>
+				</FontString>
+
 				<FontString name="$parentTextMin1" inherits="GameFontNormalSmall">
 				<Size>
 					<AbsDimension x="40"/>
 				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" relativeTo="$parentTextRank1" relativePoint="TOPRIGHT">
+					<Anchor point="TOPLEFT" relativeTo="$parentMark1" relativePoint="TOPRIGHT">
 					<!-- <Offset>
 						<AbsDimension x="10" y="0"/>
 					</Offset> -->

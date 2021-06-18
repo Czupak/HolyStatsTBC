@@ -98,7 +98,8 @@ local healingSpells = {
 					Mana = 30,
 					Cast = 1.5,
 					BaseCast = 1.5,
-					lvl = 1
+					lvl = 1,
+					direct = true
 				}
 			},
 			['Rank 2'] = {
@@ -108,7 +109,8 @@ local healingSpells = {
 					Mana = 45,
 					Cast = 2,
 					BaseCast = 2,
-					lvl = 4
+					lvl = 4,
+					direct = true
 				}
 			},
 			['Rank 3'] = {
@@ -118,7 +120,8 @@ local healingSpells = {
 					Mana = 75,
 					Cast = 2.5,
 					BaseCast = 2.5,
-					lvl = 10
+					lvl = 10,
+					direct = true
 				}
 			},
 		},
@@ -130,7 +133,8 @@ local healingSpells = {
 					Mana = 155,
 					Cast = 2.5,
 					BaseCast = 3,
-					lvl = 16
+					lvl = 16,
+					direct = true
 				}
 			},
 			['Rank 2'] = {
@@ -140,7 +144,8 @@ local healingSpells = {
 					Mana = 205,
 					Cast = 2.5,
 					BaseCast = 3,
-					lvl = 28
+					lvl = 28,
+					direct = true
 				}
 			},
 			['Rank 3'] = {
@@ -150,7 +155,8 @@ local healingSpells = {
 					Mana = 255,
 					Cast = 2.5,
 					BaseCast = 3,
-					lvl = 28
+					lvl = 28,
+					direct = true
 				}
 			},
 			['Rank 4'] = {
@@ -160,7 +166,8 @@ local healingSpells = {
 					Mana = 305,
 					Cast = 2.5,
 					BaseCast = 3,
-					lvl = 34
+					lvl = 34,
+					direct = true
 				}
 			}
 		},
@@ -172,7 +179,8 @@ local healingSpells = {
 					Mana = 370,
 					Cast = 2.5,
 					BaseCast = 3,
-					lvl = 40
+					lvl = 40,
+					direct = true
 				}
 			},
 			['Rank 2'] = {
@@ -182,7 +190,8 @@ local healingSpells = {
 					Mana = 455,
 					Cast = 2.5,
 					BaseCast = 3,
-					lvl = 46
+					lvl = 46,
+					direct = true
 				}
 			},
 			['Rank 3'] = {
@@ -192,7 +201,8 @@ local healingSpells = {
 					Mana = 545,
 					Cast = 2.5,
 					BaseCast = 3,
-					lvl = 52
+					lvl = 52,
+					direct = true
 				}
 			},
 			['Rank 4'] = {
@@ -202,7 +212,8 @@ local healingSpells = {
 					Mana = 655,
 					Cast = 2.5,
 					BaseCast = 3,
-					lvl = 58
+					lvl = 58,
+					direct = true
 				}
 			},
 			['Rank 5'] = {
@@ -212,7 +223,8 @@ local healingSpells = {
 					Mana = 710,
 					Cast = 2.5,
 					BaseCast = 3,
-					lvl = 60
+					lvl = 60,
+					direct = true
 				}
 			},
 			['Rank 6'] = {
@@ -222,7 +234,8 @@ local healingSpells = {
 					Mana = 750,
 					Cast = 2.5,
 					BaseCast = 3,
-					lvl = 63
+					lvl = 63,
+					direct = true
 				}
 			},
 			['Rank 7'] = {
@@ -232,7 +245,8 @@ local healingSpells = {
 					Mana = 825,
 					Cast = 2.5,
 					BaseCast = 3,
-					lvl = 68
+					lvl = 68,
+					direct = true
 				}
 			}
 		},
@@ -244,7 +258,8 @@ local healingSpells = {
 					Mana = 125,
 					Cast = 1.5,
 					BaseCast = 1.5,
-					lvl = 20
+					lvl = 20,
+					direct = true
 				}
 			},
 			['Rank 2'] = {
@@ -254,7 +269,8 @@ local healingSpells = {
 					Mana = 155,
 					Cast = 1.5,
 					BaseCast = 1.5,
-					lvl = 26
+					lvl = 26,
+					direct = true
 				}
 			},
 			['Rank 3'] = {
@@ -264,7 +280,8 @@ local healingSpells = {
 					Mana = 185,
 					Cast = 1.5,
 					BaseCast = 1.5,
-					lvl = 32
+					lvl = 32,
+					direct = true
 				}
 			},
 			['Rank 4'] = {
@@ -274,7 +291,8 @@ local healingSpells = {
 					Mana = 215,
 					Cast = 1.5,
 					BaseCast = 1.5,
-					lvl = 38
+					lvl = 38,
+					direct = true
 				}
 			},
 			['Rank 5'] = {
@@ -284,7 +302,8 @@ local healingSpells = {
 					Mana = 265,
 					Cast = 1.5,
 					BaseCast = 1.5,
-					lvl = 44
+					lvl = 44,
+					direct = true
 				}
 			},
 			['Rank 6'] = {
@@ -294,7 +313,8 @@ local healingSpells = {
 					Mana = 315,
 					Cast = 1.5,
 					BaseCast = 1.5,
-					lvl = 50
+					lvl = 50,
+					direct = true
 				}
 			},
 			['Rank 7'] = {
@@ -304,7 +324,8 @@ local healingSpells = {
 					Mana = 380,
 					Cast = 1.5,
 					BaseCast = 1.5,
-					lvl = 56
+					lvl = 56,
+					direct = true
 				}
 			},
 			['Rank 8'] = {
@@ -314,7 +335,8 @@ local healingSpells = {
 					Mana = 400,
 					Cast = 1.5,
 					BaseCast = 1.5,
-					lvl = 61
+					lvl = 61,
+					direct = true
 				}
 			},
 			['Rank 9'] = {
@@ -324,7 +346,8 @@ local healingSpells = {
 					Mana = 470,
 					Cast = 1.5,
 					BaseCast = 1.5,
-					lvl = 67
+					lvl = 67,
+					direct = true
 				}
 			}
 		},
@@ -626,7 +649,8 @@ local healingSpells = {
 					Mana = 35,
 					Cast = 1.5,
 					BaseCast = 1.5,
-					lvl = 20
+					lvl = 20,
+					direct = true
 				}
 			},
 			['Rank 2'] = {
@@ -636,7 +660,8 @@ local healingSpells = {
 					Mana = 50,
 					Cast = 1.5,
 					BaseCast = 1.5,
-					lvl = 26
+					lvl = 26,
+					direct = true
 				}
 			},
 			['Rank 3'] = {
@@ -646,7 +671,8 @@ local healingSpells = {
 					Mana = 70,
 					Cast = 1.5,
 					BaseCast = 1.5,
-					lvl = 34
+					lvl = 34,
+					direct = true
 				}
 			},
 			['Rank 4'] = {
@@ -656,7 +682,8 @@ local healingSpells = {
 					Mana = 90,
 					Cast = 1.5,
 					BaseCast = 1.5,
-					lvl = 42
+					lvl = 42,
+					direct = true
 				}
 			},
 			['Rank 5'] = {
@@ -666,7 +693,8 @@ local healingSpells = {
 					Mana = 115,
 					Cast = 1.5,
 					BaseCast = 1.5,
-					lvl = 50
+					lvl = 50,
+					direct = true
 				}
 			},
 			['Rank 6'] = {
@@ -676,7 +704,8 @@ local healingSpells = {
 					Mana = 140,
 					Cast = 1.5,
 					BaseCast = 1.5,
-					lvl = 58
+					lvl = 58,
+					direct = true
 				}
 			},
 			['Rank 7'] = {
@@ -686,7 +715,8 @@ local healingSpells = {
 					Mana = 180,
 					Cast = 1.5,
 					BaseCast = 1.5,
-					lvl = 66
+					lvl = 66,
+					direct = true
 				}
 			}
 		},
@@ -750,7 +780,8 @@ local healingSpells = {
 					Mana = 35,
 					Cast = 2.5,
 					BaseCast = 2.5,
-					lvl = 1
+					lvl = 1,
+					direct = true
 				}
 			},
 			['Rank 2'] = {
@@ -760,7 +791,8 @@ local healingSpells = {
 					Mana = 60,
 					Cast = 2.5,
 					BaseCast = 2.5,
-					lvl = 6
+					lvl = 6,
+					direct = true
 				}
 			},
 			['Rank 3'] = {
@@ -770,7 +802,8 @@ local healingSpells = {
 					Mana = 110,
 					Cast = 2.5,
 					BaseCast = 2.5,
-					lvl = 14
+					lvl = 14,
+					direct = true
 				}
 			},
 			['Rank 4'] = {
@@ -780,7 +813,8 @@ local healingSpells = {
 					Mana = 190,
 					Cast = 2.5,
 					BaseCast = 2.5,
-					lvl = 22
+					lvl = 22,
+					direct = true
 				}
 			},
 			['Rank 5'] = {
@@ -790,7 +824,8 @@ local healingSpells = {
 					Mana = 275,
 					Cast = 2.5,
 					BaseCast = 2.5,
-					lvl = 30
+					lvl = 30,
+					direct = true
 				}
 			},
 			['Rank 6'] = {
@@ -800,7 +835,8 @@ local healingSpells = {
 					Mana = 365,
 					Cast = 2.5,
 					BaseCast = 2.5,
-					lvl = 38
+					lvl = 38,
+					direct = true
 				}
 			},
 			['Rank 7'] = {
@@ -810,7 +846,8 @@ local healingSpells = {
 					Mana = 465,
 					Cast = 2.5,
 					BaseCast = 2.5,
-					lvl = 46
+					lvl = 46,
+					direct = true
 				}
 			},
 			['Rank 8'] = {
@@ -820,7 +857,8 @@ local healingSpells = {
 					Mana = 580,
 					Cast = 2.5,
 					BaseCast = 2.5,
-					lvl = 54
+					lvl = 54,
+					direct = true
 				}
 			},
 			['Rank 9'] = {
@@ -830,7 +868,8 @@ local healingSpells = {
 					Mana = 660,
 					Cast = 2.5,
 					BaseCast = 2.5,
-					lvl = 60
+					lvl = 60,
+					direct = true
 				}
 			},
 			['Rank 10'] = {
@@ -840,7 +879,8 @@ local healingSpells = {
 					Mana = 710,
 					Cast = 2.5,
 					BaseCast = 2.5,
-					lvl = 62
+					lvl = 62,
+					direct = true
 				}
 			},
 			['Rank 11'] = {
@@ -850,7 +890,8 @@ local healingSpells = {
 					Mana = 840,
 					Cast = 2.5,
 					BaseCast = 2.5,
-					lvl = 70
+					lvl = 70,
+					direct = true
 				}
 			},
 		}
@@ -886,6 +927,7 @@ function SpellsFrame_OnLoad(self)
 	local columns = {
 		{ name = 'spell', width = 110 },
 		{ name = 'rank', width = 50 },
+		{ name = 'mark', width = 50 },
 		{ name = 'min', width = 40 },
 		{ name = 'max', width = 40 },
 		{ name = 'avg', width = 40 },
@@ -969,6 +1011,11 @@ function getHealingSpells()
 		end
 		i = i + 1
 	end
+	local spellName = 'Circle of Healing'
+	if isTalentSim(spellName) and spells[spellName] == nil then
+	    spells[spellName] = healingSpells[class][spellName]
+	end
+
 	return spells
 end
 	
@@ -1067,7 +1114,8 @@ function calculateSpells()
 				BaseCast = obj['org']['BaseCast'],
 				lvl = obj['org']['lvl'],
 				targets = tg,
-				org = obj['org']
+				org = obj['org'],
+				direct = obj['org']['direct']
 			}
 		end
 	end
@@ -1178,7 +1226,7 @@ function getSpells(spells)
 					local avgHB = avg + bonusHealing * coeff
 					local eff = avgHB / meta.Mana
 					hb = (avgHB - avg) * 100 / avgHB
-					
+
 					local entry = {
 						['spell'] = spell .. targets,
 						['rank'] = rank,
@@ -1189,7 +1237,9 @@ function getSpells(spells)
 						['eff'] = eff,
 						['hbcoeff'] = coeff * 100,
 						['hb'] = hbp,
-						['hbp'] = hb
+						['hbp'] = hb,
+						['mark'] = '',
+						['direct'] = spells[spell][rank]['direct']
 					}
 					table.insert(data, entry)
 					if cache['maxeff'] < eff and config['effSpell'] == nil -- and config['effSpell'] == spell .. ' (' ..rank .. ')'
@@ -1200,7 +1250,7 @@ function getSpells(spells)
 			end
 		end
 	end
-
+    data = markSpells(data)
 	if sortBy ~= nil 
 	then
 		data = sortData(data)
@@ -1209,7 +1259,7 @@ function getSpells(spells)
 end
 
 function printData(data)
-	local keys = {'spell', 'rank', 'mana', 'min', 'max', 'avg', 'eff', 'hbcoeff', 'hb', 'hbp'}
+	local keys = {'spell', 'rank', 'mark', 'mana', 'min', 'max', 'avg', 'eff', 'hbcoeff', 'hb', 'hbp'}
 	local col = {}
 	for _,key in pairs(keys)
 	do
@@ -1238,6 +1288,7 @@ function printData(data)
 		end
 	end
 
+    SpellsFrameMark1:SetText(table.concat(col['mark'], "\n"))
 	SpellsFrameTextSpell1:SetText( table.concat(col['spell'], "\n"))
 	SpellsFrameTextRank1:SetText(table.concat(col['rank'], "\n"))
 	SpellsFrameTextMana1:SetText(table.concat(col['mana'], "\n"))
@@ -1250,6 +1301,7 @@ function printData(data)
 	SpellsFrameTextHBp1:SetText(table.concat(col['hbp'], "\n"))
 
 	local fontName, fontHeight, fontFlags = SpellsFrameTextSpell1:GetFont()
+	SpellsFrameMark1:SetFont(fontName, config['ui']['spellsWindowFont'])
 	SpellsFrameTextSpell1:SetFont(fontName, config['ui']['spellsWindowFont'])
 	SpellsFrameTextRank1:SetFont(fontName, config['ui']['spellsWindowFont'])
 	SpellsFrameTextMana1:SetFont(fontName, config['ui']['spellsWindowFont'])
@@ -1288,4 +1340,39 @@ function sortFunction(a, b)
 	else
 		return a[sortBy] > b[sortBy]
 	end
+end
+
+function getSpellMarks()
+    return config['spellMarks']
+end
+
+function markSpells(data)
+    marks = getSpellMarks()
+    for idx, _ in pairs(marks) do
+        marks[idx]['diff'] = 999999999999
+        marks[idx]['idx'] = -1
+    end
+    for idxMarks, _ in pairs(marks) do
+        for idxData, entry in pairs(data) do
+            local isUsed = false
+            for idxTmp, _ in pairs(marks) do
+                if marks[idxTmp]['idx'] == idxData then
+                    isUsed = true
+                end
+            end
+            if entry['direct'] ~= nil and not isUsed then
+                if marks[idxMarks]['diff'] > math.abs(marks[idxMarks]['avg'] - entry['avg']) then
+                    marks[idxMarks]['diff'] = math.abs(marks[idxMarks]['avg'] - entry['avg'])
+                    marks[idxMarks]['idx'] = idxData
+                end
+            end
+        end
+    end
+
+    for idx, _ in pairs(marks) do
+        if marks[idx]['idx'] > -1 and data[ marks[idx]['idx'] ]['mark'] == "" then
+            data[ marks[idx]['idx'] ]['mark'] = marks[idx]['name']
+        end
+    end
+    return data
 end

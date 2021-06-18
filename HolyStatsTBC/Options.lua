@@ -124,7 +124,20 @@ local hollystatsOptions = {
                     get = function(info) return getEffSpell() end,
                     set = function(info, val) setEffSpell(val) end,
                     style = "dropdown"
-                }
+                },
+				spacer3 = {
+				    type = "description",
+				    name = " ",
+				    width = "full",
+				    order = 2,
+				},
+				spellMarks = {
+				    type = "description",
+				    name = "Spell Marks",
+				    width = "full",
+				    order = 3,
+				    fontSize = 'large'
+				},
 		    }
 		}
 	}
@@ -132,6 +145,7 @@ local hollystatsOptions = {
 
 function HolyStatsTBC:OnInitialize()
     configTalentSim()
+    configSpellMarks()
 	LibStub("AceConfig-3.0"):RegisterOptionsTable("HolyStatsTBC", hollystatsOptions)
 	LibStub("AceConfigDialog-3.0"):AddToBlizOptions("HolyStatsTBC"):SetParent(InterfaceOptionsFramePanelContainer)
 end
@@ -162,6 +176,40 @@ function configTalentSim()
         }
     end
 end
+
+function configSpellMarks()
+    for i = 1, 5, 1 do
+        nameLabel = 'spellMarkName' .. i
+        avgLabel = 'spellMarkAvg' .. i
+        spacerLabel = 'spellSpacer' .. i
+        hollystatsOptions['args']['tab3']['args'][nameLabel] = {
+            type = "input",
+            name = "Spell Mark " .. i .. " Name",
+            order = (i-1)*3 + 4,
+            get = function(info) return config['spellMarks'][i]['name'] end,
+            set = function(info, val) config['spellMarks'][i]['name'] = val end,
+            pattern = ""
+        }
+        hollystatsOptions['args']['tab3']['args'][avgLabel] = {
+            type = "range",
+            name = "Spell Mark " .. i .. " Average Heal",
+            order = (i-1)*3 + 5,
+            min = 0,
+            max = 6000,
+            step = 100,
+            get = function(info) return config['spellMarks'][i]['avg'] end,
+            set = function(info, val) config['spellMarks'][i]['avg'] = val end,
+        }
+        hollystatsOptions['args']['tab3']['args'][spacerLabel] = {
+            type = "description",
+            name = " ",
+            width = "full",
+            order = (i-1)*3 + 6,
+        }
+
+    end
+end
+
 
 SLASH_HOLYSTATS1 = '/holystats'
 function SlashCmdList.HOLYSTATS(msg)

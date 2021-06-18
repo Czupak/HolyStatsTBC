@@ -43,6 +43,12 @@ function frame:OnEvent(event, arg1)
                 end
             end
         end
+        if config['spellMarks'] == nil then
+            config['spellMarks'] = {}
+            for i = 1, 5, 1 do
+                table.insert(config['spellMarks'], {name = '', avg = 99999999})
+            end
+        end
 
 		HolyStats_OnLoad(HolyStats)
 		SpellsFrameConfig_OnLoad(SpellsFrameConfig)
