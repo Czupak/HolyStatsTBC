@@ -85,7 +85,7 @@ function SpellsFrameConfig_Fill(self)
 	local wSpellName = 110
 	local height = 20
 	local offsetX = wSpellName
-	local numRanks = 11
+	local numRanks = 12
 	self:SetWidth( numRanks * 50 + wSpellName)
 	SpellsFrameConfigBG:SetVertexColor(0.1, 0.3, 0.3)
 	if not frameLoaded
