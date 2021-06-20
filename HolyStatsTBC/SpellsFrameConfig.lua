@@ -50,34 +50,6 @@ function SpellsFrameConfig_OnMouseUp(self, button)
 	self:StopMovingOrSizing()
 end
 
-function isSpellIgnored(spell, rank)
-	if myIgnoredSpells[spell] == nil
-	then
-		myIgnoredSpells[spell] = {}
-	end
-
-	if myIgnoredSpells[spell][rank] == nil
-	then
-		return false 
-	else 
-		return myIgnoredSpells[spell][rank]
-	end
-	
-end
-
-function toggleSpellIgnore(spell, rank)
-	if myIgnoredSpells[spell] == nil
-	then
-		myIgnoredSpells[spell] = {}
-	end
-	if isSpellIgnored(spell, rank)
-	then
-		myIgnoredSpells[spell][rank] = false
-	else
-		myIgnoredSpells[spell][rank] = true
-	end
-end
-
 local offsetY = 0
 local frameLoaded = false
 function SpellsFrameConfig_Fill(self)

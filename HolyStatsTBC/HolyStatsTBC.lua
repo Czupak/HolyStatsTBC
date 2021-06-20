@@ -1,8 +1,8 @@
+HolyStatsTBC = LibStub("AceAddon-3.0"):NewAddon("HolyStatsTBC")
+
 local prefix = "|cffffa500MP5|cff1784d1Regen|r: "
 local regen
 local delay
-local isSpellsFrame = false
-local pauseUpdate = false
 local _, class = UnitClass("player");
 
 local frame = CreateFrame("FRAME")
@@ -62,13 +62,21 @@ function HolyStats_OnLoad(self)
 	HolyStatsFrame:SetMinResize(20,20)
 	HolyStatsFrame:SetClampedToScreen(true)
 
-	local btn_toggle = CreateFrame("Button", nil, HolyStatsFrame,"UIPanelButtonTemplate")
-	btn_toggle:SetPoint("TOPLEFT", -20, 1)
-	btn_toggle:SetScript("OnClick", function()
+	local btnSpellsFrame = CreateFrame("Button", nil, HolyStatsFrame, "UIPanelButtonTemplate")
+	btnSpellsFrame:SetPoint("TOPLEFT", -20, -21)
+	btnSpellsFrame:SetScript("OnClick", function()
 		toggleSpellsFrame()
 	end)
-	btn_toggle:SetText('?')
-	btn_toggle:SetWidth(20)
+	btnSpellsFrame:SetText('S')
+	btnSpellsFrame:SetWidth(20)
+
+	local btnSpellsConfig = CreateFrame("Button", nil, HolyStatsFrame,"UIPanelButtonTemplate")
+	btnSpellsConfig:SetPoint("TOPLEFT", -20, -41)
+	btnSpellsConfig:SetScript("OnClick", function()
+		toggleSpellsFrameConfig()
+	end)
+	btnSpellsConfig:SetText('C')
+	btnSpellsConfig:SetWidth(20)
 
 	delay = 0
 end
@@ -85,7 +93,8 @@ function HolyStats_OnUpdate(self, elapsed)
 		HolyStats_update()
 		if isSpellsFrame
 		then
-			SpellsFrame_Update()
+			FancySpellsFrame_Update()
+			--SpellsFrame_Update()
 		end
 	end
 end
@@ -189,91 +198,14 @@ end
 
 function showSpellsFrame()
 	isSpellsFrame = true
-	SpellsFrame:Show()
+	FancySpellsFrame:Show()
+	--SpellsFrame:Show()
 end
 
 function hideSpellsFrame()
 	isSpellsFrame = false
-	SpellsFrame:Hide()
+	FancySpellsFrame:Hide()
+	--SpellsFrame:Hide()
 end
 
-function getClassTalents()
-	local talents = {
-		['PRIEST'] = {
-			['Spiritual Healing'] = {2, 16, 5},
-			['Improved Healing'] = {2, 10, 3},
-			['Improved Renew'] = {2, 2, 3},
-			['Mental Agility'] = {1, 11, 5},
-			['Holy Specialization'] = {2, 3, 5},
-			['Meditation'] = {1, 9, 3},
-			['Healing Prayers'] = {2, 12, 2},
-			['Divine Fury'] = {2, 5, 5},
-			['Empowered Healing'] = {2, 20, 5},
-			['Circle of Healing'] = {2, 21, 1}
-		},
-		['PALADIN'] = {
-			['Healing Light'] = {1, 5, 3},
-			['Illumination'] = {1, 9, 5},
-			['Holy Power'] = {1, 15, 5}
-		}
-	}
-    return talents[class]
-end
 
-function getTalentRank(talent)
-	local talents = getClassTalents()
-	if talents[talent] ~= nil
-	then
-		if isTalentSim(talent)
-		then
-			return talents[talent][3]
-		end
-
-		local name, iconPath, tier, column, currentRank, maxRank, isExceptional, meetsPrereq = GetTalentInfo( talents[talent][1], talents[talent][2])
-		if en(name) == talent and currentRank > 0
-		then
-			return currentRank
-		end
-	end
-	
-	return 0
-end
-
-function toggleTalentSim(talent)
-	if isTalentSim(talent)
-	then
-		config['sim'][talent] = false
-	else
-		config['sim'][talent] = true
-	end
-end
-
-function isTalentSim(talent)
-	if config['sim'][talent] == nil or config['sim'][talent] == false
-	then
-		return false
-	else
-		return true
-	end
-end
-
-function getTalentSimString()
-    simArr = {}
-    for talent, value in pairs(config['sim']) do
-        if isTalentSim(talent)
-        then
-            table.insert(simArr, talent)
-        end
-    end
-    return table.concat(simArr, "\n")
-end
-
-function resetPosition()
-    HolyStatsFrame:SetSize(150, 180)
-    HolyStatsFrame:ClearAllPoints()
-    HolyStatsFrame:SetPoint("TOPLEFT", "UIParent", "CENTER", -50, 50)
-    SpellsFrame:ClearAllPoints()
-    SpellsFrame:SetPoint("TOPLEFT", "UIParent", "CENTER", -50, 50)
-    SpellsFrameConfig:ClearAllPoints()
-    SpellsFrameConfig:SetPoint("TOPLEFT", "UIParent" ,"CENTER", -50, 50)
-end

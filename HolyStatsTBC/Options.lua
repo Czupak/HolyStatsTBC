@@ -1,4 +1,3 @@
-HolyStatsTBC = LibStub("AceAddon-3.0"):NewAddon("HolyStatsTBC")
 local hollystatsOptions = {
     name = "HolyStatsTBC",
     handler = HolyStatsTBC,
