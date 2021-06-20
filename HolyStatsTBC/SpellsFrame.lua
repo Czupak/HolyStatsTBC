@@ -1242,8 +1242,7 @@ function getSpells(spells)
 						['direct'] = spells[spell][rank]['direct']
 					}
 					table.insert(data, entry)
-					if cache['maxeff'] < eff and config['effSpell'] == nil -- and config['effSpell'] == spell .. ' (' ..rank .. ')'
-					then
+					if config['effSpell'] ~= nil and config['effSpell'] == spell .. ' (' ..rank .. ')' then
 						cache['maxeff'] = eff
 					end
 				end
