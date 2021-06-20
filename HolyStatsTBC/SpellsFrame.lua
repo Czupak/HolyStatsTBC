@@ -1182,18 +1182,11 @@ function getSpells(spells)
 
 				-- Coefficiency
 				local coeff = meta.BaseCast / 3.5
-				if spell == 'Renew'
-				then
-					coeff = meta.BaseCast / 15
-				end
-				if spell == 'Prayer of Healing'
-				then
-					coeff = coeff / 3
-				end
-				if spell == 'Holy Nova'
-				then
-					coeff = coeff / 3 / 2
-				end
+				if     spell == 'Circle of Healing' then coeff = meta.BaseCast / 3.5 / 2
+				elseif spell == 'Renew'	            then coeff = meta.BaseCast / 15
+				elseif spell == 'Prayer of Healing'	then coeff = meta.BaseCast / 3.5 / 3
+				elseif spell == 'Holy Nova'			then coeff = meta.BaseCast / 3.5 / 3 / 2 end
+
 				-- Level penality
 				local lvlPenality = 1
 				if meta.lvl < 20
