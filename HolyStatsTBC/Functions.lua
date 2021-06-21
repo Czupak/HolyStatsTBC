@@ -45,68 +45,8 @@ function toggleSpellIgnore(spell, rank)
     end
 end
 
-function printData(data)
-    local keys = {'spell', 'rank', 'mark', 'mana', 'min', 'max', 'avg', 'eff', 'hbcoeff', 'hb', 'hbp'}
-    local col = {}
-    for _,key in pairs(keys)
-    do
-        col[key] = {}
-    end
-
-    for i, entry in pairs(data)
-    do
-        for _,key in pairs(keys)
-        do
-            if key == 'eff'
-            then
-                entry[key] = entry[key] * 1000 / cache['maxeff']
-                entry[key] = math.floor(entry[key]+0.5)
-                entry[key] = entry[key] / 10
-            end
-            if key == 'avg' or key == 'hb' or key == 'min' or key == 'max' or key == 'hbcoeff' or key == 'hbp'
-            then
-                entry[key] = math.floor(entry[key]+0.5)
-            end
-            if key == 'hbp' or key == 'hbcoeff'
-            then
-                entry[key] = string.format("%d%%", entry[key])
-            end
-            table.insert(col[key], entry[key])
-        end
-    end
-
-    SpellsFrameMark1:SetText(table.concat(col['mark'], "\n"))
-    SpellsFrameTextSpell1:SetText( table.concat(col['spell'], "\n"))
-    SpellsFrameTextRank1:SetText(table.concat(col['rank'], "\n"))
-    SpellsFrameTextMana1:SetText(table.concat(col['mana'], "\n"))
-    SpellsFrameTextMin1:SetText(table.concat(col['min'], "\n"))
-    SpellsFrameTextMax1:SetText(table.concat(col['max'], "\n"))
-    SpellsFrameTextAvg1:SetText(table.concat(col['avg'], "\n"))
-    SpellsFrameTextEff1:SetText(table.concat(col['eff'], "\n"))
-    SpellsFrameTextHBCoeff1:SetText(table.concat(col['hbcoeff'], "\n"))
-    SpellsFrameTextHB1:SetText(table.concat(col['hb'], "\n"))
-    SpellsFrameTextHBp1:SetText(table.concat(col['hbp'], "\n"))
-
-    local fontName, fontHeight, fontFlags = SpellsFrameTextSpell1:GetFont()
-    SpellsFrameMark1:SetFont(fontName, config['ui']['spellsWindowFont'])
-    SpellsFrameTextSpell1:SetFont(fontName, config['ui']['spellsWindowFont'])
-    SpellsFrameTextRank1:SetFont(fontName, config['ui']['spellsWindowFont'])
-    SpellsFrameTextMana1:SetFont(fontName, config['ui']['spellsWindowFont'])
-    SpellsFrameTextMin1:SetFont(fontName, config['ui']['spellsWindowFont'])
-    SpellsFrameTextMax1:SetFont(fontName, config['ui']['spellsWindowFont'])
-    SpellsFrameTextAvg1:SetFont(fontName, config['ui']['spellsWindowFont'])
-    SpellsFrameTextEff1:SetFont(fontName, config['ui']['spellsWindowFont'])
-    SpellsFrameTextHBCoeff1:SetFont(fontName, config['ui']['spellsWindowFont'])
-    SpellsFrameTextHB1:SetFont(fontName, config['ui']['spellsWindowFont'])
-    SpellsFrameTextHBp1:SetFont(fontName, config['ui']['spellsWindowFont'])
-    -- SpellsFrameBG:SetWidth( 8 * 40 + 160 )
-    -- print('W: ' .. tostring(8 * 40 + 160))
-    -- print('H: ' .. tostring(SpellsFrameTextSpell1:GetHeight()))
-    -- SpellsFrameBG:SetHeight(SpellsFrameTextSpell1:GetHeight()+40)
-end
-
 function sortData(data)
-    table.sort( data, sortFunction )
+    table.sort(data, sortFunction)
 
     return data
 end
@@ -165,8 +105,8 @@ function markSpells(data)
     end
 
     for idx, _ in pairs(marks) do
-        if marks[idx]['idx'] > -1 and data[ marks[idx]['idx'] ]['mark'] == "" then
-            data[ marks[idx]['idx'] ]['mark'] = marks[idx]['name']
+        if marks[idx]['idx'] > -1 and data[marks[idx]['idx']]['mark'] == "" then
+            data[marks[idx]['idx']]['mark'] = marks[idx]['name']
         end
     end
     return data
@@ -175,21 +115,21 @@ end
 function getClassTalents()
     local talents = {
         ['PRIEST'] = {
-            ['Spiritual Healing'] = {2, 16, 5},
-            ['Improved Healing'] = {2, 10, 3},
-            ['Improved Renew'] = {2, 2, 3},
-            ['Mental Agility'] = {1, 11, 5},
-            ['Holy Specialization'] = {2, 3, 5},
-            ['Meditation'] = {1, 9, 3},
-            ['Healing Prayers'] = {2, 12, 2},
-            ['Divine Fury'] = {2, 5, 5},
-            ['Empowered Healing'] = {2, 20, 5},
-            ['Circle of Healing'] = {2, 21, 1}
+            ['Spiritual Healing'] = { 2, 16, 5 },
+            ['Improved Healing'] = { 2, 10, 3 },
+            ['Improved Renew'] = { 2, 2, 3 },
+            ['Mental Agility'] = { 1, 11, 5 },
+            ['Holy Specialization'] = { 2, 3, 5 },
+            ['Meditation'] = { 1, 9, 3 },
+            ['Healing Prayers'] = { 2, 12, 2 },
+            ['Divine Fury'] = { 2, 5, 5 },
+            ['Empowered Healing'] = { 2, 20, 5 },
+            ['Circle of Healing'] = { 2, 21, 1 }
         },
         ['PALADIN'] = {
-            ['Healing Light'] = {1, 5, 3},
-            ['Illumination'] = {1, 9, 5},
-            ['Holy Power'] = {1, 15, 5}
+            ['Healing Light'] = { 1, 5, 3 },
+            ['Illumination'] = { 1, 9, 5 },
+            ['Holy Power'] = { 1, 15, 5 }
         }
     }
     return talents[class]
@@ -204,7 +144,7 @@ function getTalentRank(talent)
             return talents[talent][3]
         end
 
-        local name, iconPath, tier, column, currentRank, maxRank, isExceptional, meetsPrereq = GetTalentInfo( talents[talent][1], talents[talent][2])
+        local name, iconPath, tier, column, currentRank, maxRank, isExceptional, meetsPrereq = GetTalentInfo(talents[talent][1], talents[talent][2])
         if en(name) == talent and currentRank > 0
         then
             return currentRank
@@ -250,7 +190,9 @@ function getHealingSpells()
         local spellName, spellSubName = GetSpellBookItemName(i, BOOKTYPE_SPELL)
         if not spellName
         then
-            do break end
+            do
+                break
+            end
         end
         spellName = en(spellName)
         spellSubName = en(spellSubName)
@@ -318,7 +260,7 @@ function calculateSpells()
             local mana = obj['org']['Mana']
             if spell == 'Heal' or spell == 'Lesser Heal' or spell == 'Greater Heal'
             then
-                mana = mana * (1-manaCost)
+                mana = mana * (1 - manaCost)
             end
             if spell == 'Prayer of Healing' or spell == 'Prayer of Mending'
             then
@@ -329,8 +271,8 @@ function calculateSpells()
             local xMax = obj['org']['Max']
             if spell ~= 'Holy Shock'
             then
-                xMin = xMin*(1+bonus)
-                xMax = xMax*(1+bonus)
+                xMin = xMin * (1 + bonus)
+                xMax = xMax * (1 + bonus)
             end
 
             if obj['org']['instant'] ~= nil
@@ -340,8 +282,8 @@ function calculateSpells()
 
             if spell == 'Renew'
             then
-                xMin = obj['org']['Min']*(1+bonus+renew)
-                xMax = obj['org']['Max']*(1+bonus+renew)
+                xMin = obj['org']['Min'] * (1 + bonus + renew)
+                xMax = obj['org']['Max'] * (1 + bonus + renew)
             end
 
             local tg = nil
@@ -367,14 +309,13 @@ function calculateSpells()
 end
 
 function getSpells(spells)
-    local toFrame = ''
     local data = {}
     cache['maxeff'] = 0
-    for a,spell in pairs(sortKeys(spells))
+    for a, spell in pairs(sortKeys(spells))
     do
-        for a,rank in pairs(sortKeys(spells[spell]))
+        for a, rank in pairs(sortKeys(spells[spell]))
         do
-            if config['effSpell'] ~= nil and config['effSpell'] == spell .. ' (' ..rank .. ')'
+            if config['effSpell'] ~= nil and config['effSpell'] == spell .. ' (' .. rank .. ')'
             then
                 -- FIXME
                 local meta = spells[spell][rank]
@@ -397,7 +338,6 @@ function getSpells(spells)
                 cache['maxeff'] = eff
             end
 
-
             if not isSpellIgnored(spell, rank)
             then
                 local meta = spells[spell][rank]
@@ -416,10 +356,15 @@ function getSpells(spells)
 
                 -- Coefficiency
                 local coeff = meta.BaseCast / 3.5
-                if     spell == 'Circle of Healing' then coeff = meta.BaseCast / 3.5 / 2
-                elseif spell == 'Renew'	            then coeff = meta.BaseCast / 15
-                elseif spell == 'Prayer of Healing'	then coeff = meta.BaseCast / 3.5 / 3
-                elseif spell == 'Holy Nova'			then coeff = meta.BaseCast / 3.5 / 3 / 2 end
+                if spell == 'Circle of Healing' then
+                    coeff = meta.BaseCast / 3.5 / 2
+                elseif spell == 'Renew' then
+                    coeff = meta.BaseCast / 15
+                elseif spell == 'Prayer of Healing' then
+                    coeff = meta.BaseCast / 3.5 / 3
+                elseif spell == 'Holy Nova' then
+                    coeff = meta.BaseCast / 3.5 / 3 / 2
+                end
 
                 -- Level penality
                 local lvlPenality = 1
@@ -442,7 +387,7 @@ function getSpells(spells)
                     local targets = ''
                     local cMin = meta.Min * tarNum
                     local cMax = meta.Max * tarNum
-                    if meta.targets ~=nil
+                    if meta.targets ~= nil
                     then
                         targets = ' (x' .. tostring(tarNum) .. ')'
                     end
@@ -469,7 +414,7 @@ function getSpells(spells)
                         ['direct'] = spells[spell][rank]['direct']
                     }
                     table.insert(data, entry)
-                    if config['effSpell'] ~= nil and config['effSpell'] == spell .. ' (' ..rank .. ')' then
+                    if config['effSpell'] ~= nil and config['effSpell'] == spell .. ' (' .. rank .. ')' then
                         cache['maxeff'] = eff
                     end
                 end
@@ -491,5 +436,10 @@ function resetPosition()
     FancySpellsFrame:ClearAllPoints()
     FancySpellsFrame:SetPoint("TOPLEFT", "UIParent", "CENTER", -50, 50)
     SpellsFrameConfig:ClearAllPoints()
-    SpellsFrameConfig:SetPoint("TOPLEFT", "UIParent" ,"CENTER", -50, 50)
+    SpellsFrameConfig:SetPoint("TOPLEFT", "UIParent", "CENTER", -50, 50)
+end
+
+function openOptions()
+    InterfaceOptionsFrame_OpenToCategory("HolyStatsTBC")
+    InterfaceOptionsFrame_OpenToCategory("HolyStatsTBC")
 end
