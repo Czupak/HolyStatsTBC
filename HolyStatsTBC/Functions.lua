@@ -2,7 +2,8 @@ cache = {}
 sortBy = 'eff'
 sortOrder = 0
 isSpellsFrame = false
-pauseUpdate = false
+pauseUpdate = true
+delay = 0
 local _, class = UnitClass("player");
 
 function sortKeys(data)

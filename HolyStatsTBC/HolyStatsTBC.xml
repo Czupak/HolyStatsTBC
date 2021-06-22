@@ -70,12 +70,6 @@
 			</Layer>
 		</Layers>
 		<Scripts>
-			<OnUpdate>
-				HolyStats_OnUpdate(self, elapsed)
-			</OnUpdate>
-			<!-- <OnEvent>
-				MonkeySpeed_OnEvent(self, event, ...)
-			</OnEvent> -->
 			<OnMouseDown>
 				HolyStats_OnMouseDown(self, button)
 			</OnMouseDown>

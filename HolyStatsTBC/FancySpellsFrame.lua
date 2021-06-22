@@ -170,10 +170,6 @@ function getCellColor(entry, key)
     end
 end
 
-function HolyStatsTBC:OnEnable()
-    FancySpellsFrame_Init()
-end
-
 function FancySpellsFrame_Init()
     local columns = {}
     for _, col in pairs(FancyColumns) do

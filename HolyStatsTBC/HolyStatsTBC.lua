@@ -1,60 +1,50 @@
 HolyStatsTBC = LibStub("AceAddon-3.0"):NewAddon("HolyStatsTBC")
-
-local prefix = "|cffffa500MP5|cff1784d1Regen|r: "
 local regen
-local delay
-local _, class = UnitClass("player");
 
-local frame = CreateFrame("FRAME")
-frame:RegisterEvent("ADDON_LOADED")
--- frame:RegisterEvent("PLAYER_LOGOUT")
-
-function frame:OnEvent(event, arg1)
-    if event == "ADDON_LOADED" -- and arg1 == 'HolyStats'
+function HolyStatsTBC:OnEnable()
+    if myIgnoredSpells == nil
     then
-        if myIgnoredSpells == nil
-        then
-            myIgnoredSpells = {}
-        end
-        if config == nil
-        then
-            config = {}
-        end
-        if config['sim'] == nil
-        then
-            config['sim'] = {}
-        end
-        if config['ui'] == nil
-        then
-            config['ui'] = {}
-        end
-
-        for i, key in pairs({ 'mainWindowFont', 'mainWindowAlpha', 'spellsWindowFont', 'mainWindowBGColor', 'mainWindowFontColor' }) do
-            if config['ui'][key] == nil
-            then
-                if key == 'mainWindowAlpha' then
-                    config['ui'][key] = 100
-                elseif key == 'mainWindowBGColor' then
-                    config['ui'][key] = { 0.2, 0.2, 0.2, 1.0 }
-                elseif key == 'mainWindowFontColor' then
-                    config['ui'][key] = { 1, 1, 1, 1 }
-                else
-                    config['ui'][key] = 12
-                end
-            end
-        end
-        if config['spellMarks'] == nil then
-            config['spellMarks'] = {}
-            for i = 1, 5, 1 do
-                table.insert(config['spellMarks'], { name = '', avg = 99999999 })
-            end
-        end
-
-        HolyStats_OnLoad(HolyStats)
-        SpellsFrameConfig_OnLoad(SpellsFrameConfig)
+        myIgnoredSpells = {}
     end
+    if config == nil
+    then
+        config = {}
+    end
+    if config['sim'] == nil
+    then
+        config['sim'] = {}
+    end
+    if config['ui'] == nil
+    then
+        config['ui'] = {}
+    end
+
+    for i, key in pairs({ 'mainWindowFont', 'mainWindowAlpha', 'spellsWindowFont', 'mainWindowBGColor', 'mainWindowFontColor' }) do
+        if config['ui'][key] == nil
+        then
+            if key == 'mainWindowAlpha' then
+                config['ui'][key] = 100
+            elseif key == 'mainWindowBGColor' then
+                config['ui'][key] = { 0.2, 0.2, 0.2, 1.0 }
+            elseif key == 'mainWindowFontColor' then
+                config['ui'][key] = { 1, 1, 1, 1 }
+            else
+                config['ui'][key] = 12
+            end
+        end
+    end
+    if config['spellMarks'] == nil then
+        config['spellMarks'] = {}
+        for i = 1, 5, 1 do
+            table.insert(config['spellMarks'], { name = '', avg = 99999999 })
+        end
+    end
+    pauseUpdate = false
+    HolyStats_OnLoad(HolyStats)
+    FancySpellsFrame_Init()
+    SpellsFrameConfig_OnLoad(SpellsFrameConfig)
+    HolyStatsFrame:SetScript("OnUpdate", HolyStats_OnUpdate)
 end
-frame:SetScript("OnEvent", frame.OnEvent);
 
 function HolyStats_OnLoad(self)
     bgColor = config['ui']['mainWindowBGColor']
@@ -145,8 +135,10 @@ function HolyStats_update()
     local full = maxmana / regen
     local fullin = (maxmana - mana) / regen
     local percent = 100 * mana / maxmana
+    if not percent or percent > 100 then
+        percent = 0
+    end
     local crit = GetSpellCritChance(2) + getTalentRank('Holy Specialization')
-
     local itemBonus = 0
     local itemRegen = 0
     for invSlot = 1, 18 do
