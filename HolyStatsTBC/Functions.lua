@@ -225,66 +225,71 @@ function calculateSpells()
     -- Spiritual Guidance - healing by 5% * 5 of Spirit [included in bonus healing]
     -- Spritual Healing - healing spells 2% * 5
     -- Empowered Healing - Greater Heal +4% * 5 hb; Flash Heal and Binding Heal +2% * 5 hb
-    local bonus = 0
-    local talentRank = getTalentRank('Spiritual Healing')
-    if talentRank > 0
-    then
-        bonus = 0.02 * talentRank
-    end
-
-    -- Paladin
-    local talentRank = getTalentRank('Healing Light')
-    if talentRank > 0
-    then
-        bonus = 0.04 * talentRank
-    end
-
-    local manaCost = 0
-    talentRank = getTalentRank('Improved Healing')
-    if talentRank > 0
-    then
-        manaCost = 0.05 * talentRank
-    end
-
-    local renew = 0
-    talentRank = getTalentRank('Improved Renew')
-    if talentRank > 0
-    then
-        renew = 0.05 * talentRank
-    end
-
     local data = healingSpells
     for spell, ranks in pairs(healingSpells[class])
     do
         for rank, obj in pairs(ranks)
         do
-            local mana = obj['org']['Mana']
-            if spell == 'Heal' or spell == 'Lesser Heal' or spell == 'Greater Heal'
-            then
-                mana = mana * (1 - manaCost)
-            end
-            if spell == 'Prayer of Healing' or spell == 'Prayer of Mending'
-            then
-                mana = mana * (1 - getTalentRank('Healing Prayers') * 0.1)
-            end
+            local meta = obj['org']
 
-            local xMin = obj['org']['Min']
-            local xMax = obj['org']['Max']
-            if spell ~= 'Holy Shock'
-            then
-                xMin = xMin * (1 + bonus)
-                xMax = xMax * (1 + bonus)
+            -- mana
+            local mana = meta['Mana']
+            if spell == 'Heal' or spell == 'Lesser Heal' or spell == 'Greater Heal' then
+                mana = mana * (1 - 0.05 * getTalentRank('Improved Healing'))
+            elseif spell == 'Prayer of Healing' or spell == 'Prayer of Mending' then
+                mana = mana * (1 - 0.1 * getTalentRank('Healing Prayers'))
             end
-
+            -- Instant cast spells
             if obj['org']['instant'] ~= nil
             then
                 mana = mana * (1 - 0.02 * getTalentRank('Mental Agility'))
             end
 
-            if spell == 'Renew'
+            -- Healing Bonus
+            local bonusHealing = GetSpellBonusHealing()
+            if spell == 'Greater Heal'
             then
-                xMin = obj['org']['Min'] * (1 + bonus + renew)
-                xMax = obj['org']['Max'] * (1 + bonus + renew)
+                bonusHealing = bonusHealing + bonusHealing * getTalentRank('Empowered Healing') * 0.04
+            end
+            if spell == 'Flash Heal' or spell == 'Binding Heal'
+            then
+                bonusHealing = bonusHealing + bonusHealing * getTalentRank('Empowered Healing') * 0.02
+            end
+
+            -- Coefficiency
+            local coeff = meta.BaseCast / 3.5
+            if spell == 'Circle of Healing' then
+                coeff = meta.BaseCast / 3.5 / 2
+            elseif spell == 'Renew' then
+                coeff = meta.BaseCast / 15
+            elseif spell == 'Prayer of Healing' then
+                coeff = meta.BaseCast / 3.5 / 3
+            elseif spell == 'Holy Nova' then
+                coeff = meta.BaseCast / 3.5 / 3 / 2
+            end
+
+            -- Level penality
+            local lvlPenality = 1
+            if meta.lvl < 20
+            then
+                lvlPenality = 1 - ((20 - meta.lvl) * 0.0375)
+            end
+            -- TBC
+            lvlPenality = lvlPenality * math.min(((meta.nextLevel - 1) + 5 ) / UnitLevel("player"), 1)
+            coeff = coeff * lvlPenality
+
+            -- Min/Max
+            local bonusHealingCoeff = bonusHealing * coeff
+            local xMin = obj['org']['Min'] + bonusHealingCoeff
+            local xMax = obj['org']['Max'] + bonusHealingCoeff
+
+            -- apply +% for healing spells
+            xMin = xMin * (1 + 0.02 * getTalentRank('Spiritual Healing') + 0.04 * getTalentRank('Healing Light'))
+            xMax = xMax * (1 + 0.02 * getTalentRank('Spiritual Healing') + 0.04 * getTalentRank('Healing Light'))
+
+            if spell == 'Renew' then
+                xMin = xMin * (1 + 0.05 * getTalentRank('Improved Renew'))
+                xMax = xMax * (1 + 0.05 * getTalentRank('Improved Renew'))
             end
 
             local tg = nil
@@ -293,15 +298,17 @@ function calculateSpells()
                 tg = obj['org']['targets']
             end
             data[class][spell][rank] = {
-                Min = xMin,
-                Max = xMax,
-                Mana = mana,
-                Cast = obj['org']['Cast'],
-                BaseCast = obj['org']['BaseCast'],
-                lvl = obj['org']['lvl'],
-                targets = tg,
-                org = obj['org'],
-                direct = obj['org']['direct']
+                ['Min'] = xMin,
+                ['Max'] = xMax,
+                ['Mana'] = mana,
+                ['Cast'] = obj['org']['Cast'],
+                ['BaseCast'] = obj['org']['BaseCast'],
+                ['lvl'] = obj['org']['lvl'],
+                ['targets'] = tg,
+                ['org'] = obj['org'],
+                ['direct'] = obj['org']['direct'],
+                ['coeff'] = coeff,
+                ['hb'] = bonusHealingCoeff
             }
         end
     end
@@ -312,72 +319,20 @@ end
 function getSpells(spells)
     local data = {}
     cache['maxeff'] = 0
-    for a, spell in pairs(sortKeys(spells))
+    for _, spell in pairs(sortKeys(spells))
     do
-        for a, rank in pairs(sortKeys(spells[spell]))
+        for _, rank in pairs(sortKeys(spells[spell]))
         do
             if config['effSpell'] ~= nil and config['effSpell'] == spell .. ' (' .. rank .. ')'
             then
                 -- FIXME
                 local meta = spells[spell][rank]
-
-                local coeff = meta.BaseCast / 3.5
-                if spell == 'Renew'
-                then
-                    coeff = meta.BaseCast / 15
-                end
-                if spell == 'Holy Nova'
-                then
-                    coeff = coeff / 3 / 2
-                end
-                local bonusHealing = GetSpellBonusHealing()
-                local cMin = meta.Min
-                local cMax = meta.Max
-                local avg = (cMin + cMax) / 2
-                local avgHB = avg + bonusHealing * coeff
-                local eff = avgHB / meta.Mana
-                cache['maxeff'] = eff
+                cache['maxeff'] = (meta.Min + meta.Max) / 2 / meta.Mana
             end
 
             if not isSpellIgnored(spell, rank)
             then
                 local meta = spells[spell][rank]
-                local hb = 0
-
-                -- Healing Bonus
-                local bonusHealing = GetSpellBonusHealing()
-                if spell == 'Greater Heal'
-                then
-                    bonusHealing = bonusHealing + bonusHealing * getTalentRank('Empowered Healing') * 0.04
-                end
-                if spell == 'Flash Heal' or spell == 'Binding Heal'
-                then
-                    bonusHealing = bonusHealing + bonusHealing * getTalentRank('Empowered Healing') * 0.02
-                end
-
-                -- Coefficiency
-                local coeff = meta.BaseCast / 3.5
-                if spell == 'Circle of Healing' then
-                    coeff = meta.BaseCast / 3.5 / 2
-                elseif spell == 'Renew' then
-                    coeff = meta.BaseCast / 15
-                elseif spell == 'Prayer of Healing' then
-                    coeff = meta.BaseCast / 3.5 / 3
-                elseif spell == 'Holy Nova' then
-                    coeff = meta.BaseCast / 3.5 / 3 / 2
-                end
-
-                -- Level penality
-                local lvlPenality = 1
-                if meta.lvl < 20
-                then
-                    lvlPenality = 1 - ((20 - meta.lvl) * 0.0375)
-                end
-                coeff = coeff * lvlPenality
-
-                local mana = math.ceil(meta.Mana)
-                hbp = bonusHealing * coeff
-
                 local loopTargets = 1
                 if meta.targets ~= nil
                 then
@@ -394,23 +349,20 @@ function getSpells(spells)
                     end
 
                     local avg = (cMin + cMax) / 2
-                    local mMin = cMin + bonusHealing * coeff
-                    local mMax = cMax + bonusHealing * coeff
-                    local avgHB = avg + bonusHealing * coeff
-                    local eff = avgHB / meta.Mana
-                    hb = (avgHB - avg) * 100 / avgHB
+                    local eff = avg / meta.Mana
+                    local healingBonusPercentOfTotal = (meta['hb']) * 100 / avg
 
                     local entry = {
                         ['spell'] = spell .. targets,
                         ['rank'] = rank,
-                        ['mana'] = mana,
-                        ['min'] = mMin,
-                        ['max'] = mMax,
-                        ['avg'] = avgHB,
+                        ['mana'] = math.ceil(meta.Mana),
+                        ['min'] = cMin,
+                        ['max'] = cMax,
+                        ['avg'] = avg,
                         ['eff'] = eff,
-                        ['hbcoeff'] = coeff * 100,
-                        ['hb'] = hbp,
-                        ['hbp'] = hb,
+                        ['hbcoeff'] = meta['coeff'] * 100,
+                        ['hb'] = meta['hb'],
+                        ['hbp'] = healingBonusPercentOfTotal,
                         ['mark'] = '',
                         ['direct'] = spells[spell][rank]['direct']
                     }

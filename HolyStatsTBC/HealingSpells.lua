@@ -10,7 +10,8 @@ healingSpells = {
                     BaseCast = 1.5,
                     lvl = 68,
                     targets = 5,
-                    instant = true
+                    instant = true,
+                    nextLevel = 68
                 }
             },
         },
@@ -24,7 +25,8 @@ healingSpells = {
                     BaseCast = 1.5,
                     lvl = 70,
                     targets = 5,
-                    instant = true
+                    instant = true,
+                    nextLevel = 70
                 }
             },
             ['Rank 2'] = {
@@ -36,7 +38,8 @@ healingSpells = {
                     BaseCast = 1.5,
                     lvl = 70,
                     targets = 5,
-                    instant = true
+                    instant = true,
+                    nextLevel = 70
                 }
             },
             ['Rank 3'] = {
@@ -48,7 +51,8 @@ healingSpells = {
                     BaseCast = 1.5,
                     lvl = 70,
                     targets = 5,
-                    instant = true
+                    instant = true,
+                    nextLevel = 70
                 }
             },
             ['Rank 4'] = {
@@ -60,7 +64,8 @@ healingSpells = {
                     BaseCast = 1.5,
                     lvl = 70,
                     targets = 5,
-                    instant = true
+                    instant = true,
+                    nextLevel = 70
                 }
             },
             ['Rank 5'] = {
@@ -72,7 +77,8 @@ healingSpells = {
                     BaseCast = 1.5,
                     lvl = 70,
                     targets = 5,
-                    instant = true
+                    instant = true,
+                    nextLevel = 70
                 }
             },
         },
@@ -85,7 +91,8 @@ healingSpells = {
                     Cast = 1.5,
                     BaseCast = 1.5,
                     lvl = 70,
-                    targets = 2
+                    targets = 2,
+                    nextLevel = 70
                 }
             }
         },
@@ -98,7 +105,8 @@ healingSpells = {
                     Cast = 1.5,
                     BaseCast = 1.5,
                     lvl = 1,
-                    direct = true
+                    direct = true,
+                    nextLevel = 4
                 }
             },
             ['Rank 2'] = {
@@ -109,7 +117,8 @@ healingSpells = {
                     Cast = 2,
                     BaseCast = 2,
                     lvl = 4,
-                    direct = true
+                    direct = true,
+                    nextLevel = 10
                 }
             },
             ['Rank 3'] = {
@@ -120,7 +129,8 @@ healingSpells = {
                     Cast = 2.5,
                     BaseCast = 2.5,
                     lvl = 10,
-                    direct = true
+                    direct = true,
+                    nextLevel = 10
                 }
             },
         },
@@ -133,7 +143,8 @@ healingSpells = {
                     Cast = 2.5,
                     BaseCast = 3,
                     lvl = 16,
-                    direct = true
+                    direct = true,
+                    nextLevel = 28
                 }
             },
             ['Rank 2'] = {
@@ -144,7 +155,8 @@ healingSpells = {
                     Cast = 2.5,
                     BaseCast = 3,
                     lvl = 28,
-                    direct = true
+                    direct = true,
+                    nextLevel = 28
                 }
             },
             ['Rank 3'] = {
@@ -155,7 +167,8 @@ healingSpells = {
                     Cast = 2.5,
                     BaseCast = 3,
                     lvl = 28,
-                    direct = true
+                    direct = true,
+                    nextLevel = 34
                 }
             },
             ['Rank 4'] = {
@@ -166,7 +179,8 @@ healingSpells = {
                     Cast = 2.5,
                     BaseCast = 3,
                     lvl = 34,
-                    direct = true
+                    direct = true,
+                    nextLevel = 34
                 }
             }
         },
@@ -179,7 +193,8 @@ healingSpells = {
                     Cast = 2.5,
                     BaseCast = 3,
                     lvl = 40,
-                    direct = true
+                    direct = true,
+                    nextLevel = 46
                 }
             },
             ['Rank 2'] = {
@@ -190,7 +205,8 @@ healingSpells = {
                     Cast = 2.5,
                     BaseCast = 3,
                     lvl = 46,
-                    direct = true
+                    direct = true,
+                    nextLevel = 52
                 }
             },
             ['Rank 3'] = {
@@ -201,7 +217,8 @@ healingSpells = {
                     Cast = 2.5,
                     BaseCast = 3,
                     lvl = 52,
-                    direct = true
+                    direct = true,
+                    nextLevel = 58
                 }
             },
             ['Rank 4'] = {
@@ -212,7 +229,8 @@ healingSpells = {
                     Cast = 2.5,
                     BaseCast = 3,
                     lvl = 58,
-                    direct = true
+                    direct = true,
+                    nextLevel = 60
                 }
             },
             ['Rank 5'] = {
@@ -223,7 +241,8 @@ healingSpells = {
                     Cast = 2.5,
                     BaseCast = 3,
                     lvl = 60,
-                    direct = true
+                    direct = true,
+                    nextLevel = 63
                 }
             },
             ['Rank 6'] = {
@@ -234,7 +253,8 @@ healingSpells = {
                     Cast = 2.5,
                     BaseCast = 3,
                     lvl = 63,
-                    direct = true
+                    direct = true,
+                    nextLevel = 68
                 }
             },
             ['Rank 7'] = {
@@ -245,7 +265,8 @@ healingSpells = {
                     Cast = 2.5,
                     BaseCast = 3,
                     lvl = 68,
-                    direct = true
+                    direct = true,
+                    nextLevel = 68
                 }
             }
         },
@@ -258,7 +279,8 @@ healingSpells = {
                     Cast = 1.5,
                     BaseCast = 1.5,
                     lvl = 20,
-                    direct = true
+                    direct = true,
+                    nextLevel = 26
                 }
             },
             ['Rank 2'] = {
@@ -269,7 +291,8 @@ healingSpells = {
                     Cast = 1.5,
                     BaseCast = 1.5,
                     lvl = 26,
-                    direct = true
+                    direct = true,
+                    nextLevel = 32
                 }
             },
             ['Rank 3'] = {
@@ -280,7 +303,8 @@ healingSpells = {
                     Cast = 1.5,
                     BaseCast = 1.5,
                     lvl = 32,
-                    direct = true
+                    direct = true,
+                    nextLevel = 38
                 }
             },
             ['Rank 4'] = {
@@ -291,7 +315,8 @@ healingSpells = {
                     Cast = 1.5,
                     BaseCast = 1.5,
                     lvl = 38,
-                    direct = true
+                    direct = true,
+                    nextLevel = 40
                 }
             },
             ['Rank 5'] = {
@@ -302,7 +327,8 @@ healingSpells = {
                     Cast = 1.5,
                     BaseCast = 1.5,
                     lvl = 44,
-                    direct = true
+                    direct = true,
+                    nextLevel = 50
                 }
             },
             ['Rank 6'] = {
@@ -313,7 +339,8 @@ healingSpells = {
                     Cast = 1.5,
                     BaseCast = 1.5,
                     lvl = 50,
-                    direct = true
+                    direct = true,
+                    nextLevel = 56
                 }
             },
             ['Rank 7'] = {
@@ -324,7 +351,8 @@ healingSpells = {
                     Cast = 1.5,
                     BaseCast = 1.5,
                     lvl = 56,
-                    direct = true
+                    direct = true,
+                    nextLevel = 61
                 }
             },
             ['Rank 8'] = {
@@ -335,7 +363,8 @@ healingSpells = {
                     Cast = 1.5,
                     BaseCast = 1.5,
                     lvl = 61,
-                    direct = true
+                    direct = true,
+                    nextLevel = 67
                 }
             },
             ['Rank 9'] = {
@@ -346,7 +375,8 @@ healingSpells = {
                     Cast = 1.5,
                     BaseCast = 1.5,
                     lvl = 67,
-                    direct = true
+                    direct = true,
+                    nextLevel = 67
                 }
             }
         },
@@ -359,7 +389,8 @@ healingSpells = {
                     Cast = 0,
                     BaseCast = 15,
                     lvl = 8,
-                    instant = true
+                    instant = true,
+                    nextLevel = 14
                 }
             },
             ['Rank 2'] = {
@@ -370,7 +401,8 @@ healingSpells = {
                     Cast = 0,
                     BaseCast = 15,
                     lvl = 14,
-                    instant = true
+                    instant = true,
+                    nextLevel = 20
                 }
             },
             ['Rank 3'] = {
@@ -381,7 +413,8 @@ healingSpells = {
                     Cast = 0,
                     BaseCast = 15,
                     lvl = 20,
-                    instant = true
+                    instant = true,
+                    nextLevel = 26
                 }
             },
             ['Rank 4'] = {
@@ -392,7 +425,8 @@ healingSpells = {
                     Cast = 0,
                     BaseCast = 15,
                     lvl = 26,
-                    instant = true
+                    instant = true,
+                    nextLevel = 32
                 }
             },
             ['Rank 5'] = {
@@ -403,7 +437,8 @@ healingSpells = {
                     Cast = 0,
                     BaseCast = 15,
                     lvl = 32,
-                    instant = true
+                    instant = true,
+                    nextLevel = 38
                 }
             },
             ['Rank 6'] = {
@@ -414,7 +449,8 @@ healingSpells = {
                     Cast = 0,
                     BaseCast = 15,
                     lvl = 38,
-                    instant = true
+                    instant = true,
+                    nextLevel = 44
                 }
             },
             ['Rank 7'] = {
@@ -425,7 +461,8 @@ healingSpells = {
                     Cast = 0,
                     BaseCast = 15,
                     lvl = 44,
-                    instant = true
+                    instant = true,
+                    nextLevel = 50
                 }
             },
             ['Rank 8'] = {
@@ -436,7 +473,8 @@ healingSpells = {
                     Cast = 0,
                     BaseCast = 15,
                     lvl = 50,
-                    instant = true
+                    instant = true,
+                    nextLevel = 56
                 }
             },
             ['Rank 9'] = {
@@ -447,7 +485,8 @@ healingSpells = {
                     Cast = 0,
                     BaseCast = 15,
                     lvl = 56,
-                    instant = true
+                    instant = true,
+                    nextLevel = 60
                 }
             },
             ['Rank 10'] = {
@@ -458,7 +497,8 @@ healingSpells = {
                     Cast = 0,
                     BaseCast = 15,
                     lvl = 60,
-                    instant = true
+                    instant = true,
+                    nextLevel = 65
                 }
             },
             ['Rank 11'] = {
@@ -469,7 +509,8 @@ healingSpells = {
                     Cast = 0,
                     BaseCast = 15,
                     lvl = 65,
-                    instant = true
+                    instant = true,
+                    nextLevel = 70
                 }
             },
             ['Rank 12'] = {
@@ -480,7 +521,8 @@ healingSpells = {
                     Cast = 0,
                     BaseCast = 15,
                     lvl = 70,
-                    instant = true
+                    instant = true,
+                    nextLevel = 70
                 }
             },
         },
@@ -492,8 +534,9 @@ healingSpells = {
                     Mana = 410,
                     Cast = 3,
                     BaseCast = 3,
-                    lvl = 60,
-                    targets = 5
+                    lvl = 30,
+                    targets = 5,
+                    nextLevel = 40
                 }
             },
             ['Rank 2'] = {
@@ -503,8 +546,9 @@ healingSpells = {
                     Mana = 560,
                     Cast = 3,
                     BaseCast = 3,
-                    lvl = 60,
-                    targets = 5
+                    lvl = 40,
+                    targets = 5,
+                    nextLevel = 50
                 }
             },
             ['Rank 3'] = {
@@ -514,8 +558,9 @@ healingSpells = {
                     Mana = 770,
                     Cast = 3,
                     BaseCast = 3,
-                    lvl = 60,
-                    targets = 5
+                    lvl = 50,
+                    targets = 5,
+                    nextLevel = 60
                 }
             },
             ['Rank 4'] = {
@@ -526,7 +571,8 @@ healingSpells = {
                     Cast = 3,
                     BaseCast = 3,
                     lvl = 60,
-                    targets = 5
+                    targets = 5,
+                    nextLevel = 60
                 }
             },
             ['Rank 5'] = {
@@ -537,7 +583,8 @@ healingSpells = {
                     Cast = 3,
                     BaseCast = 3,
                     lvl = 60,
-                    targets = 5
+                    targets = 5,
+                    nextLevel = 68
                 }
             },
             ['Rank 6'] = {
@@ -548,7 +595,8 @@ healingSpells = {
                     Cast = 3,
                     BaseCast = 3,
                     lvl = 68,
-                    targets = 5
+                    targets = 5,
+                    nextLevel = 68
                 }
             },
         },
@@ -562,7 +610,8 @@ healingSpells = {
                     BaseCast = 1.5,
                     lvl = 68,
                     targets = 5,
-                    instant = true
+                    instant = true,
+                    nextLevel = 68
                 }
             },
             ['Rank 6'] = {
@@ -574,7 +623,8 @@ healingSpells = {
                     BaseCast = 1.5,
                     lvl = 60,
                     targets = 5,
-                    instant = true
+                    instant = true,
+                    nextLevel = 68
                 }
             },
             ['Rank 5'] = {
@@ -586,7 +636,8 @@ healingSpells = {
                     BaseCast = 1.5,
                     lvl = 52,
                     targets = 5,
-                    instant = true
+                    instant = true,
+                    nextLevel = 60
                 }
             },
             ['Rank 4'] = {
@@ -598,7 +649,8 @@ healingSpells = {
                     BaseCast = 1.5,
                     lvl = 44,
                     targets = 5,
-                    instant = true
+                    instant = true,
+                    nextLevel = 52
                 }
             },
             ['Rank 3'] = {
@@ -610,7 +662,8 @@ healingSpells = {
                     BaseCast = 1.5,
                     lvl = 36,
                     targets = 5,
-                    instant = true
+                    instant = true,
+                    nextLevel = 44
                 }
             },
             ['Rank 2'] = {
@@ -622,7 +675,8 @@ healingSpells = {
                     BaseCast = 1.5,
                     lvl = 28,
                     targets = 5,
-                    instant = true
+                    instant = true,
+                    nextLevel = 36
                 }
             },
             ['Rank 1'] = {
@@ -634,7 +688,8 @@ healingSpells = {
                     BaseCast = 1.5,
                     lvl = 20,
                     targets = 5,
-                    instant = true
+                    instant = true,
+                    nextLevel = 28
                 }
             },
         }
@@ -649,7 +704,8 @@ healingSpells = {
                     Cast = 1.5,
                     BaseCast = 1.5,
                     lvl = 20,
-                    direct = true
+                    direct = true,
+                    nextLevel = 26
                 }
             },
             ['Rank 2'] = {
@@ -660,7 +716,8 @@ healingSpells = {
                     Cast = 1.5,
                     BaseCast = 1.5,
                     lvl = 26,
-                    direct = true
+                    direct = true,
+                    nextLevel = 34
                 }
             },
             ['Rank 3'] = {
@@ -671,7 +728,8 @@ healingSpells = {
                     Cast = 1.5,
                     BaseCast = 1.5,
                     lvl = 34,
-                    direct = true
+                    direct = true,
+                    nextLevel = 42
                 }
             },
             ['Rank 4'] = {
@@ -682,7 +740,8 @@ healingSpells = {
                     Cast = 1.5,
                     BaseCast = 1.5,
                     lvl = 42,
-                    direct = true
+                    direct = true,
+                    nextLevel = 50
                 }
             },
             ['Rank 5'] = {
@@ -693,7 +752,8 @@ healingSpells = {
                     Cast = 1.5,
                     BaseCast = 1.5,
                     lvl = 50,
-                    direct = true
+                    direct = true,
+                    nextLevel = 58
                 }
             },
             ['Rank 6'] = {
@@ -704,7 +764,8 @@ healingSpells = {
                     Cast = 1.5,
                     BaseCast = 1.5,
                     lvl = 58,
-                    direct = true
+                    direct = true,
+                    nextLevel = 66
                 }
             },
             ['Rank 7'] = {
@@ -715,7 +776,8 @@ healingSpells = {
                     Cast = 1.5,
                     BaseCast = 1.5,
                     lvl = 66,
-                    direct = true
+                    direct = true,
+                    nextLevel = 66
                 }
             }
         },
@@ -727,7 +789,8 @@ healingSpells = {
                     Mana = 335,
                     Cast = 1.5,
                     BaseCast = 1.5,
-                    lvl = 1
+                    lvl = 1,
+                    nextLevel = 48
                 }
             },
             ['Rank 2'] = {
@@ -737,7 +800,8 @@ healingSpells = {
                     Mana = 410,
                     Cast = 1.5,
                     BaseCast = 1.5,
-                    lvl = 48
+                    lvl = 48,
+                    nextLevel = 56
                 }
             },
             ['Rank 3'] = {
@@ -747,7 +811,8 @@ healingSpells = {
                     Mana = 485,
                     Cast = 1.5,
                     BaseCast = 1.5,
-                    lvl = 56
+                    lvl = 56,
+                    nextLevel = 64
                 }
             },
             ['Rank 4'] = {
@@ -757,7 +822,8 @@ healingSpells = {
                     Mana = 575,
                     Cast = 1.5,
                     BaseCast = 1.5,
-                    lvl = 46
+                    lvl = 64,
+                    nextLevel = 70
                 }
             },
             ['Rank 5'] = {
@@ -767,7 +833,8 @@ healingSpells = {
                     Mana = 650,
                     Cast = 1.5,
                     BaseCast = 1.5,
-                    lvl = 70
+                    lvl = 70,
+                    nextLevel = 70
                 }
             }
         },
@@ -780,7 +847,8 @@ healingSpells = {
                     Cast = 2.5,
                     BaseCast = 2.5,
                     lvl = 1,
-                    direct = true
+                    direct = true,
+                    nextLevel = 6
                 }
             },
             ['Rank 2'] = {
@@ -791,7 +859,8 @@ healingSpells = {
                     Cast = 2.5,
                     BaseCast = 2.5,
                     lvl = 6,
-                    direct = true
+                    direct = true,
+                    nextLevel = 14
                 }
             },
             ['Rank 3'] = {
@@ -802,7 +871,8 @@ healingSpells = {
                     Cast = 2.5,
                     BaseCast = 2.5,
                     lvl = 14,
-                    direct = true
+                    direct = true,
+                    nextLevel = 22
                 }
             },
             ['Rank 4'] = {
@@ -813,7 +883,8 @@ healingSpells = {
                     Cast = 2.5,
                     BaseCast = 2.5,
                     lvl = 22,
-                    direct = true
+                    direct = true,
+                    nextLevel = 30
                 }
             },
             ['Rank 5'] = {
@@ -824,7 +895,8 @@ healingSpells = {
                     Cast = 2.5,
                     BaseCast = 2.5,
                     lvl = 30,
-                    direct = true
+                    direct = true,
+                    nextLevel = 38
                 }
             },
             ['Rank 6'] = {
@@ -835,7 +907,8 @@ healingSpells = {
                     Cast = 2.5,
                     BaseCast = 2.5,
                     lvl = 38,
-                    direct = true
+                    direct = true,
+                    nextLevel = 46
                 }
             },
             ['Rank 7'] = {
@@ -846,7 +919,8 @@ healingSpells = {
                     Cast = 2.5,
                     BaseCast = 2.5,
                     lvl = 46,
-                    direct = true
+                    direct = true,
+                    nextLevel = 54
                 }
             },
             ['Rank 8'] = {
@@ -857,7 +931,8 @@ healingSpells = {
                     Cast = 2.5,
                     BaseCast = 2.5,
                     lvl = 54,
-                    direct = true
+                    direct = true,
+                    nextLevel = 60
                 }
             },
             ['Rank 9'] = {
@@ -868,7 +943,8 @@ healingSpells = {
                     Cast = 2.5,
                     BaseCast = 2.5,
                     lvl = 60,
-                    direct = true
+                    direct = true,
+                    nextLevel = 62
                 }
             },
             ['Rank 10'] = {
@@ -890,7 +966,8 @@ healingSpells = {
                     Cast = 2.5,
                     BaseCast = 2.5,
                     lvl = 70,
-                    direct = true
+                    direct = true,
+                    nextLevel = 70
                 }
             },
         }

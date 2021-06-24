@@ -138,7 +138,16 @@ function HolyStats_update()
     if not percent or percent > 100 then
         percent = 0
     end
-    local crit = GetSpellCritChance(2) + getTalentRank('Holy Specialization')
+    local typePerClass = {
+        ['PRIEST'] = 2, -- Holy
+        ['PALADIN'] = 2,-- Holy
+        ['DRUID'] = 4   -- Nature
+    }
+    local class = UnitClass("player")
+    if typePerClass[class] == nil then
+        class = 'PRIEST'
+    end
+    local crit = GetSpellCritChance(typePerClass[class])
     local itemBonus = 0
     local itemRegen = 0
     for invSlot = 1, 18 do
