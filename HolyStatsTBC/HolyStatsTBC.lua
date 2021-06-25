@@ -147,7 +147,13 @@ function HolyStats_update()
     if typePerClass[class] == nil then
         class = 'PRIEST'
     end
-    local crit = GetSpellCritChance(typePerClass[class])
+    local critBonus = 0
+    for _, tal in pairs({'Holy Specialization', 'Natural Perfection'}) do
+        if isTalentSim(tal) then
+            critBonus = critBonus + getTalentRank(tal)
+        end
+    end
+    local crit = GetSpellCritChance(typePerClass[class]) + critBonus
     local itemBonus = 0
     local itemRegen = 0
     for invSlot = 1, 18 do
@@ -165,9 +171,10 @@ function HolyStats_update()
                     elseif k == "ITEM_MOD_POWER_REGEN0_SHORT"
                     then
                         itemRegen = itemRegen + v + 1
-                    elseif k == "ITEM_MOD_CRIT_SPELL_RATING_SHORT"
-                    then
-                        crit = crit + v + 1
+                    --elseif k == "ITEM_MOD_CRIT_SPELL_RATING_SHORT"
+                    --then
+                    --    -- FIXME
+                    --    crit = crit + v + 1
                     end
                 end
             end

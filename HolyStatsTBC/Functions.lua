@@ -131,6 +131,16 @@ function getClassTalents()
             ['Healing Light'] = { 1, 5, 3 },
             ['Illumination'] = { 1, 9, 5 },
             ['Holy Power'] = { 1, 15, 5 }
+        },
+        ['DRUID'] = {
+            ['Naturalist'] = { 3, 3, 5 },
+            ['Intensity'] = { 3, 6, 3 },
+            ['Tranquil Spirit'] = { 3, 9, 5 },
+            ['Improved Rejuvenation'] = { 3, 10, 3 },
+            ['Gift of Nature'] = { 3, 12, 5 },
+            ['Empowered Touch'] = { 3, 14, 2 },
+            ['Empowered Rejuvenation'] = { 3, 19, 5 },
+            ['Tree of Life'] = { 3, 20, 1 }
         }
     }
     return talents[class]
@@ -225,6 +235,25 @@ function calculateSpells()
     -- Spiritual Guidance - healing by 5% * 5 of Spirit [included in bonus healing]
     -- Spritual Healing - healing spells 2% * 5
     -- Empowered Healing - Greater Heal +4% * 5 hb; Flash Heal and Binding Heal +2% * 5 hb
+    -- Druid:
+    --  Implemented:
+    --      ['Tranquil Spirit'] Reduce mana of Healing Touch / Tranquility by 2% [x1-5]
+    --      ['Improved Rejuvenation'] Rejuvenation heal +5% [x1-3]
+    --      ['Gift of Nature'] All healing spells +2% [x1-5]
+    --      ['Empowered Touch'] Healing Touch +10% to HealBonus [x1-2]
+    --      ['Empowered Rejuvenation'] HoTs HealBonus +4% [x1-5]
+    --      ['Tree of Life'] Increase healing received by 25% of Spirit; Mana cost of some spells -20%
+    --  Not needed:
+    --      ['Naturalist'] Reduce cast time of Healing Touch by 0.1s [x1-5]
+    --      ['Intensity'] 10% Mana to continue while casting [x1-3]
+    local stanceHealing = 0
+    local stanceManaReduction = 0
+    if class == 'DRUID' and GetShapeshiftForm() == 6 then
+        local base, stat, posBuff, negBuff = UnitStat("player", 5) -- Spirit
+        stanceHealing = stat * 0.25
+        stanceManaReduction = 0.2
+    end
+
     local data = healingSpells
     for spell, ranks in pairs(healingSpells[class])
     do
@@ -238,22 +267,25 @@ function calculateSpells()
                 mana = mana * (1 - 0.05 * getTalentRank('Improved Healing'))
             elseif spell == 'Prayer of Healing' or spell == 'Prayer of Mending' then
                 mana = mana * (1 - 0.1 * getTalentRank('Healing Prayers'))
+            elseif spell == 'Healing Touch' or spell == 'Tranquility' then
+                mana = mana * (1 - 0.2 * getTalentRank('Tranquil Spirit'))
+            end
+            if meta['hotMin'] ~= nil and meta['hotMax'] ~= nil then
+                mana = mana * (1 - stanceManaReduction)
             end
             -- Instant cast spells
-            if obj['org']['instant'] ~= nil
-            then
+            if obj['org']['instant'] ~= nil then
                 mana = mana * (1 - 0.02 * getTalentRank('Mental Agility'))
             end
 
             -- Healing Bonus
             local bonusHealing = GetSpellBonusHealing()
-            if spell == 'Greater Heal'
-            then
+            if spell == 'Greater Heal' then
                 bonusHealing = bonusHealing + bonusHealing * getTalentRank('Empowered Healing') * 0.04
-            end
-            if spell == 'Flash Heal' or spell == 'Binding Heal'
-            then
+            elseif spell == 'Flash Heal' or spell == 'Binding Heal' then
                 bonusHealing = bonusHealing + bonusHealing * getTalentRank('Empowered Healing') * 0.02
+            elseif spell == 'Healing Touch' then
+                bonusHealing = bonusHealing + bonusHealing * getTalentRank('Empowered Touch') * 0.1
             end
 
             -- Coefficiency
@@ -269,32 +301,58 @@ function calculateSpells()
             end
 
             -- Level penality
-            local lvlPenality = 1
-            if meta.lvl < 20
-            then
-                lvlPenality = 1 - ((20 - meta.lvl) * 0.0375)
+            local lvlPenalty = 1
+            if meta.lvl < 20 then
+                lvlPenalty = 1 - ((20 - meta.lvl) * 0.0375)
             end
             -- TBC
-            lvlPenality = lvlPenality * math.min(((meta.nextLevel - 1) + 5 ) / UnitLevel("player"), 1)
-            coeff = coeff * lvlPenality
+            lvlPenalty = lvlPenalty * math.min(((meta.nextLevel - 1) + 5) / UnitLevel("player"), 1)
+            coeff = coeff * lvlPenalty
 
             -- Min/Max
             local bonusHealingCoeff = bonusHealing * coeff
-            local xMin = obj['org']['Min'] + bonusHealingCoeff
-            local xMax = obj['org']['Max'] + bonusHealingCoeff
+            local hotMin = meta['hotMin']
+            local hotMax = meta['hotMax']
+            if not hotMin then
+                hotMin = 0
+            end
+            if not hotMax then
+                hotMax = 0
+            end
+            if hotMax > 0 and hotMin > 0 then
+                bonusHealingCoeff = bonusHealingCoeff * (1 + 0.04 * getTalentRank('Empowered Rejuvenation'))
+            end
+            local xMin = obj['org']['Min'] + hotMin + bonusHealingCoeff
+            local xMax = obj['org']['Max'] + hotMax + bonusHealingCoeff
 
             -- apply +% for healing spells
-            xMin = xMin * (1 + 0.02 * getTalentRank('Spiritual Healing') + 0.04 * getTalentRank('Healing Light'))
-            xMax = xMax * (1 + 0.02 * getTalentRank('Spiritual Healing') + 0.04 * getTalentRank('Healing Light'))
+            xMin = xMin * (1
+                    + 0.02 * getTalentRank('Spiritual Healing')
+                    + 0.04 * getTalentRank('Healing Light')
+                    + 0.02 * getTalentRank('Gift of Nature'))
+            xMax = xMax * (1
+                    + 0.02 * getTalentRank('Spiritual Healing')
+                    + 0.04 * getTalentRank('Healing Light')
+                    + 0.02 * getTalentRank('Gift of Nature'))
 
-            if spell == 'Renew' then
-                xMin = xMin * (1 + 0.05 * getTalentRank('Improved Renew'))
-                xMax = xMax * (1 + 0.05 * getTalentRank('Improved Renew'))
+            if spell == 'Renew' or spell == 'Rejuvenation' then
+                xMin = xMin * (1
+                        + 0.05 * getTalentRank('Improved Renew')
+                        + 0.05 * getTalentRank('Improved Rejuvenation')
+                )
+                xMax = xMax * (1
+                        + 0.05 * getTalentRank('Improved Renew')
+                        + 0.05 * getTalentRank('Improved Rejuvenation')
+                )
+            end
+
+            if stanceHealing > 0 then
+                xMin = xMin + stanceHealing
+                xMax = xMax + stanceHealing
             end
 
             local tg = nil
-            if obj['org']['targets'] ~= nil
-            then
+            if obj['org']['targets'] ~= nil then
                 tg = obj['org']['targets']
             end
             data[class][spell][rank] = {

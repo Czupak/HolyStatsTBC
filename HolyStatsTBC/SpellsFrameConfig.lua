@@ -57,7 +57,13 @@ function SpellsFrameConfig_Fill(self)
 	local wSpellName = 110
 	local height = 20
 	local offsetX = wSpellName
-	local numRanks = 12
+	local numRanks = 0
+	for _, spell in pairs(sortKeys(spells)) do
+		if numRanks < #sortKeys(spells[spell]) then
+			numRanks = #sortKeys(spells[spell])
+		end
+	end
+
 	self:SetWidth( numRanks * 50 + wSpellName)
 	SpellsFrameConfigBG:SetVertexColor(0.1, 0.3, 0.3)
 	if not frameLoaded
