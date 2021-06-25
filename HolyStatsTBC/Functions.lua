@@ -4,6 +4,7 @@ sortOrder = 0
 isSpellsFrame = false
 pauseUpdate = true
 delay = 0
+calcFormula = {}
 local _, class = UnitClass("player");
 
 function sortKeys(data)
@@ -253,22 +254,32 @@ function calculateSpells()
         stanceHealing = stat * 0.25
         stanceManaReduction = 0.2
     end
-
+    calcFormula = {}
     local data = healingSpells
     for spell, ranks in pairs(healingSpells[class])
     do
+        if calcFormula[spell] == nil then
+            calcFormula[spell] = {}
+        end
+
         for rank, obj in pairs(ranks)
         do
+            if calcFormula[spell][rank] == nil then
+                calcFormula[spell][rank] = {}
+            end
             local meta = obj['org']
 
             -- mana
             local mana = meta['Mana']
             if spell == 'Heal' or spell == 'Lesser Heal' or spell == 'Greater Heal' then
                 mana = mana * (1 - 0.05 * getTalentRank('Improved Healing'))
+                table.insert(calcFormula[spell][rank], 'Improved Healing: -' .. getTalentRank('Improved Healing') .. ' * 5% = ' .. mana)
             elseif spell == 'Prayer of Healing' or spell == 'Prayer of Mending' then
                 mana = mana * (1 - 0.1 * getTalentRank('Healing Prayers'))
+                table.insert(calcFormula[spell][rank], 'Healing Prayers: -' .. getTalentRank('Healing Prayers') .. ' * 10% = ' .. mana)
             elseif spell == 'Healing Touch' or spell == 'Tranquility' then
                 mana = mana * (1 - 0.2 * getTalentRank('Tranquil Spirit'))
+                table.insert(calcFormula[spell][rank], 'Tranquil Spirit: -' .. getTalentRank('Tranquil Spirit') .. ' * 5% = ' .. mana)
             end
             if meta['hotMin'] ~= nil and meta['hotMax'] ~= nil then
                 mana = mana * (1 - stanceManaReduction)
@@ -276,16 +287,20 @@ function calculateSpells()
             -- Instant cast spells
             if obj['org']['instant'] ~= nil then
                 mana = mana * (1 - 0.02 * getTalentRank('Mental Agility'))
+                table.insert(calcFormula[spell][rank], 'Mental Agility: ' .. getTalentRank('Mental Agility') .. ' * 2% = ' .. mana)
             end
 
             -- Healing Bonus
             local bonusHealing = GetSpellBonusHealing()
             if spell == 'Greater Heal' then
                 bonusHealing = bonusHealing + bonusHealing * getTalentRank('Empowered Healing') * 0.04
+                table.insert(calcFormula[spell][rank], 'Empowered Healing: ' .. getTalentRank('Empowered Healing') .. ' * 4% = ' .. bonusHealing)
             elseif spell == 'Flash Heal' or spell == 'Binding Heal' then
                 bonusHealing = bonusHealing + bonusHealing * getTalentRank('Empowered Healing') * 0.02
+                table.insert(calcFormula[spell][rank], 'Empowered Healing: ' .. getTalentRank('Empowered Healing') .. ' * 2% = ' .. bonusHealing)
             elseif spell == 'Healing Touch' then
                 bonusHealing = bonusHealing + bonusHealing * getTalentRank('Empowered Touch') * 0.1
+                table.insert(calcFormula[spell][rank], 'Empowered Touch: ' .. getTalentRank('Empowered Touch') .. ' * 10% = ' .. bonusHealing)
             end
 
             -- Coefficiency
@@ -294,6 +309,7 @@ function calculateSpells()
                 coeff = meta.BaseCast / 3.5 / 2
             elseif spell == 'Renew' then
                 coeff = meta.BaseCast / 15
+                table.insert(calcFormula[spell][rank], 'Base Coefficiency: ' .. meta.BaseCast .. ' / 15 = ' .. coeff)
             elseif spell == 'Prayer of Healing' then
                 coeff = meta.BaseCast / 3.5 / 3
             elseif spell == 'Holy Nova' then
@@ -304,10 +320,13 @@ function calculateSpells()
             local lvlPenalty = 1
             if meta.lvl < 20 then
                 lvlPenalty = 1 - ((20 - meta.lvl) * 0.0375)
+                table.insert(calcFormula[spell][rank], 'Level penalty [<20]: ' .. lvlPenalty)
             end
             -- TBC
             lvlPenalty = lvlPenalty * math.min(((meta.nextLevel - 1) + 5) / UnitLevel("player"), 1)
+            table.insert(calcFormula[spell][rank], 'Level penalty TBC: ' .. math.min(((meta.nextLevel - 1) + 5) / UnitLevel("player"), 1))
             coeff = coeff * lvlPenalty
+            table.insert(calcFormula[spell][rank], 'Final Coefficiency: ' .. coeff)
 
             -- Min/Max
             local bonusHealingCoeff = bonusHealing * coeff
@@ -324,7 +343,8 @@ function calculateSpells()
             end
             local xMin = obj['org']['Min'] + hotMin + bonusHealingCoeff
             local xMax = obj['org']['Max'] + hotMax + bonusHealingCoeff
-
+            table.insert(calcFormula[spell][rank], 'Min with bonusHealing: ' .. xMin)
+            table.insert(calcFormula[spell][rank], 'Max with bonusHealing: ' .. xMax)
             -- apply +% for healing spells
             xMin = xMin * (1
                     + 0.02 * getTalentRank('Spiritual Healing')
@@ -334,6 +354,9 @@ function calculateSpells()
                     + 0.02 * getTalentRank('Spiritual Healing')
                     + 0.04 * getTalentRank('Healing Light')
                     + 0.02 * getTalentRank('Gift of Nature'))
+            table.insert(calcFormula[spell][rank], 'Min - Spiritual Healing: ' .. getTalentRank('Spiritual Healing') .. ' * 2% = ' .. xMin)
+            table.insert(calcFormula[spell][rank], 'Max - Spiritual Healing: ' .. getTalentRank('Spiritual Healing') .. ' * 2% = ' .. xMax)
+
 
             if spell == 'Renew' or spell == 'Rejuvenation' then
                 xMin = xMin * (1
@@ -344,6 +367,8 @@ function calculateSpells()
                         + 0.05 * getTalentRank('Improved Renew')
                         + 0.05 * getTalentRank('Improved Rejuvenation')
                 )
+                table.insert(calcFormula[spell][rank], 'Min - Improved Renew: ' .. getTalentRank('Improved Renew') .. ' * 5% = ' .. xMin)
+                table.insert(calcFormula[spell][rank], 'Max - Improved Renew: ' .. getTalentRank('Improved Renew') .. ' * 5% = ' .. xMax)
             end
 
             if stanceHealing > 0 then
