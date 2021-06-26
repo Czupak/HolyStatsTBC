@@ -247,6 +247,41 @@ function calculateSpells()
     --  Not needed:
     --      ['Naturalist'] Reduce cast time of Healing Touch by 0.1s [x1-5]
     --      ['Intensity'] 10% Mana to continue while casting [x1-3]
+    local function calcAdd(spell, rank, attr, source, val, change, desc)
+        local colors = {
+            def  = "|cFF00FF00",
+            inc  = "|cFF00f1ff",
+            desc = '|cFFafabff',
+            reset= "|r"
+        }
+
+        if calcFormula[spell] == nil then
+            calcFormula[spell] = {}
+        end
+        if calcFormula[spell][rank] == nil then
+            calcFormula[spell][rank] = {
+                min = {},
+                max = {},
+                mana = {},
+                hb = {},
+                coeff = {}
+            }
+        end
+        local text = ''
+        if source == 'Base' or change == nil then
+            text = string.format("%s%s:%s %.2f", colors['def'], source, colors['reset'], val)
+        else
+            local sign = '+'
+            if change < 0 then sign = '' end
+            text = string.format("%s%s:%s %s%s%.2f %s= %.2f",
+                    colors['def'], source, colors['reset'], colors['inc'], sign, change, colors['reset'], val)
+        end
+        if desc ~= nil and desc ~= "" then
+            text = string.format("%s (%s)", text, desc)
+        end
+        table.insert(calcFormula[spell][rank][attr], text)
+    end
+
     local stanceHealing = 0
     local stanceManaReduction = 0
     if class == 'DRUID' and GetShapeshiftForm() == 6 then
@@ -258,49 +293,52 @@ function calculateSpells()
     local data = healingSpells
     for spell, ranks in pairs(healingSpells[class])
     do
-        if calcFormula[spell] == nil then
-            calcFormula[spell] = {}
-        end
-
         for rank, obj in pairs(ranks)
         do
-            if calcFormula[spell][rank] == nil then
-                calcFormula[spell][rank] = {}
-            end
             local meta = obj['org']
-
             -- mana
             local mana = meta['Mana']
+            calcAdd(spell, rank, 'mana', 'Base', mana, 0)
             if spell == 'Heal' or spell == 'Lesser Heal' or spell == 'Greater Heal' then
-                mana = mana * (1 - 0.05 * getTalentRank('Improved Healing'))
-                table.insert(calcFormula[spell][rank], 'Improved Healing: -' .. getTalentRank('Improved Healing') .. ' * 5% = ' .. mana)
+                local change = mana * (0.05 * getTalentRank('Improved Healing'))
+                mana = mana - change
+                calcAdd(spell, rank, 'mana', 'Improved Healing', mana, -change, getTalentRank('Improved Healing') .. '*5%')
             elseif spell == 'Prayer of Healing' or spell == 'Prayer of Mending' then
-                mana = mana * (1 - 0.1 * getTalentRank('Healing Prayers'))
-                table.insert(calcFormula[spell][rank], 'Healing Prayers: -' .. getTalentRank('Healing Prayers') .. ' * 10% = ' .. mana)
+                local change = mana * (0.1 * getTalentRank('Healing Prayers'))
+                mana = mana - change
+                calcAdd(spell, rank, 'mana', 'Healing Prayers', mana, -change,getTalentRank('Healing Prayers') .. '*10%')
             elseif spell == 'Healing Touch' or spell == 'Tranquility' then
-                mana = mana * (1 - 0.2 * getTalentRank('Tranquil Spirit'))
-                table.insert(calcFormula[spell][rank], 'Tranquil Spirit: -' .. getTalentRank('Tranquil Spirit') .. ' * 5% = ' .. mana)
+                local change = mana * (0.2 * getTalentRank('Tranquil Spirit'))
+                mana = mana - change
+                calcAdd(spell, rank, 'mana', 'Tranquil Spirit', mana, -change, getTalentRank('Tranquil Spirit') .. '*5%')
             end
-            if meta['hotMin'] ~= nil and meta['hotMax'] ~= nil then
-                mana = mana * (1 - stanceManaReduction)
+            if meta['hotMin'] ~= nil and meta['hotMax'] ~= nil and stanceManaReduction > 0 then
+                local change = mana * stanceManaReduction
+                mana = mana - change
+                calcAdd(spell, rank, 'mana', 'Tree Form', mana, -change, '20%')
             end
             -- Instant cast spells
             if obj['org']['instant'] ~= nil then
-                mana = mana * (1 - 0.02 * getTalentRank('Mental Agility'))
-                table.insert(calcFormula[spell][rank], 'Mental Agility: ' .. getTalentRank('Mental Agility') .. ' * 2% = ' .. mana)
+                local change = mana * (0.02 * getTalentRank('Mental Agility'))
+                mana = mana - change
+                calcAdd(spell, rank, 'mana', 'Mental Agility', mana, -change, getTalentRank('Mental Agility') .. '*2%')
             end
 
             -- Healing Bonus
             local bonusHealing = GetSpellBonusHealing()
+            calcAdd(spell, rank, 'hb', 'Base', bonusHealing)
             if spell == 'Greater Heal' then
-                bonusHealing = bonusHealing + bonusHealing * getTalentRank('Empowered Healing') * 0.04
-                table.insert(calcFormula[spell][rank], 'Empowered Healing: ' .. getTalentRank('Empowered Healing') .. ' * 4% = ' .. bonusHealing)
+                local change = bonusHealing * getTalentRank('Empowered Healing') * 0.04
+                bonusHealing = bonusHealing + change
+                calcAdd(spell, rank, 'hb', 'Empowered Healing', bonusHealing, change, getTalentRank('Empowered Healing') .. '*4%')
             elseif spell == 'Flash Heal' or spell == 'Binding Heal' then
-                bonusHealing = bonusHealing + bonusHealing * getTalentRank('Empowered Healing') * 0.02
-                table.insert(calcFormula[spell][rank], 'Empowered Healing: ' .. getTalentRank('Empowered Healing') .. ' * 2% = ' .. bonusHealing)
+                local change = bonusHealing * getTalentRank('Empowered Healing') * 0.02
+                bonusHealing = bonusHealing + change
+                calcAdd(spell, rank, 'hb', 'Empowered Healing', bonusHealing, change, getTalentRank('Empowered Healing') .. '*2%')
             elseif spell == 'Healing Touch' then
-                bonusHealing = bonusHealing + bonusHealing * getTalentRank('Empowered Touch') * 0.1
-                table.insert(calcFormula[spell][rank], 'Empowered Touch: ' .. getTalentRank('Empowered Touch') .. ' * 10% = ' .. bonusHealing)
+                local change = bonusHealing * getTalentRank('Empowered Touch') * 0.1
+                bonusHealing = bonusHealing + change
+                calcAdd(spell, rank, 'hb', 'Empowered Touch', bonusHealing, change, getTalentRank('Empowered Touch') .. '*10%')
             end
 
             -- Coefficiency
@@ -309,27 +347,30 @@ function calculateSpells()
                 coeff = meta.BaseCast / 3.5 / 2
             elseif spell == 'Renew' then
                 coeff = meta.BaseCast / 15
-                table.insert(calcFormula[spell][rank], 'Base Coefficiency: ' .. meta.BaseCast .. ' / 15 = ' .. coeff)
             elseif spell == 'Prayer of Healing' then
                 coeff = meta.BaseCast / 3.5 / 3
             elseif spell == 'Holy Nova' then
                 coeff = meta.BaseCast / 3.5 / 3 / 2
             end
+            calcAdd(spell, rank, 'coeff', 'Base', coeff)
 
             -- Level penality
             local lvlPenalty = 1
             if meta.lvl < 20 then
                 lvlPenalty = 1 - ((20 - meta.lvl) * 0.0375)
-                table.insert(calcFormula[spell][rank], 'Level penalty [<20]: ' .. lvlPenalty)
+                calcAdd(spell, rank, 'coeff', '(Level penalty [<20])', lvlPenalty)
             end
             -- TBC
-            lvlPenalty = lvlPenalty * math.min(((meta.nextLevel - 1) + 5) / UnitLevel("player"), 1)
-            table.insert(calcFormula[spell][rank], 'Level penalty TBC: ' .. math.min(((meta.nextLevel - 1) + 5) / UnitLevel("player"), 1))
+            local lvlPenaltyTBC = math.min(((meta.nextLevel - 1) + 5) / UnitLevel("player"), 1)
+            lvlPenalty = lvlPenalty * lvlPenaltyTBC
+            calcAdd(spell, rank, 'coeff', '(Level penalty [TBC])', lvlPenaltyTBC)
+            --calcAdd(spell, rank, 'coeff', '(Level penalty [Total])', lvlPenalty)
+            calcAdd(spell, rank, 'coeff', 'Coeff - Level penalty', coeff * lvlPenalty, (coeff * lvlPenalty) - coeff)
             coeff = coeff * lvlPenalty
-            table.insert(calcFormula[spell][rank], 'Final Coefficiency: ' .. coeff)
 
             -- Min/Max
             local bonusHealingCoeff = bonusHealing * coeff
+            calcAdd(spell, rank,'hb', 'coeff', bonusHealingCoeff, bonusHealingCoeff - bonusHealing, math.floor(coeff*100) .. "%")
             local hotMin = meta['hotMin']
             local hotMax = meta['hotMax']
             if not hotMin then
@@ -339,41 +380,57 @@ function calculateSpells()
                 hotMax = 0
             end
             if hotMax > 0 and hotMin > 0 then
-                bonusHealingCoeff = bonusHealingCoeff * (1 + 0.04 * getTalentRank('Empowered Rejuvenation'))
+                local change = bonusHealingCoeff * 0.04 * getTalentRank('Empowered Rejuvenation')
+                bonusHealingCoeff = bonusHealingCoeff + change
+                if getTalentRank('Empowered Rejuvenation') > 0 then
+                    calcAdd(spell, rank, 'hb', 'Empowered Rejuvenation', bonusHealingCoeff, change, getTalentRank('Empowered Rejuvenation') .. '*4%')
+                end
             end
+            calcAdd(spell, rank, 'min', 'Base', obj['org']['Min'] + hotMin)
+            calcAdd(spell, rank, 'max', 'Base', obj['org']['Max'] + hotMax)
             local xMin = obj['org']['Min'] + hotMin + bonusHealingCoeff
             local xMax = obj['org']['Max'] + hotMax + bonusHealingCoeff
-            table.insert(calcFormula[spell][rank], 'Min with bonusHealing: ' .. xMin)
-            table.insert(calcFormula[spell][rank], 'Max with bonusHealing: ' .. xMax)
+            calcAdd(spell, rank, 'min', 'Healing Bonus', xMin, bonusHealingCoeff)
+            calcAdd(spell, rank, 'max', 'Healing Bonus', xMax, bonusHealingCoeff)
             -- apply +% for healing spells
-            xMin = xMin * (1
-                    + 0.02 * getTalentRank('Spiritual Healing')
-                    + 0.04 * getTalentRank('Healing Light')
-                    + 0.02 * getTalentRank('Gift of Nature'))
-            xMax = xMax * (1
-                    + 0.02 * getTalentRank('Spiritual Healing')
-                    + 0.04 * getTalentRank('Healing Light')
-                    + 0.02 * getTalentRank('Gift of Nature'))
-            table.insert(calcFormula[spell][rank], 'Min - Spiritual Healing: ' .. getTalentRank('Spiritual Healing') .. ' * 2% = ' .. xMin)
-            table.insert(calcFormula[spell][rank], 'Max - Spiritual Healing: ' .. getTalentRank('Spiritual Healing') .. ' * 2% = ' .. xMax)
+            --xMin = xMin * (1
+            --        + 0.02 * getTalentRank('Spiritual Healing')
+            --        + 0.04 * getTalentRank('Healing Light')
+            --        + 0.02 * getTalentRank('Gift of Nature'))
+            --xMax = xMax * (1
+            --        + 0.02 * getTalentRank('Spiritual Healing')
+            --        + 0.04 * getTalentRank('Healing Light')
+            --        + 0.02 * getTalentRank('Gift of Nature'))
+            for tal, inc in pairs({['Spiritual Healing'] = 2, ['Healing Light'] = 4, ['Gift of Nature'] = 2}) do
+                if getTalentRank(tal) > 0 then
+                    local changeMin = xMin * inc / 100 * getTalentRank(tal)
+                    local changeMax = xMax * inc / 100 * getTalentRank(tal)
+                    xMin = xMin + changeMin
+                    xMax = xMax + changeMax
+                    calcAdd(spell, rank, 'min', tal, xMin, changeMin, getTalentRank(tal) .. '*' .. inc ..  '%')
+                    calcAdd(spell, rank, 'max', tal, xMax, changeMax, getTalentRank(tal) .. '*' .. inc ..  '%')
+                end
+            end
 
 
             if spell == 'Renew' or spell == 'Rejuvenation' then
-                xMin = xMin * (1
-                        + 0.05 * getTalentRank('Improved Renew')
-                        + 0.05 * getTalentRank('Improved Rejuvenation')
-                )
-                xMax = xMax * (1
-                        + 0.05 * getTalentRank('Improved Renew')
-                        + 0.05 * getTalentRank('Improved Rejuvenation')
-                )
-                table.insert(calcFormula[spell][rank], 'Min - Improved Renew: ' .. getTalentRank('Improved Renew') .. ' * 5% = ' .. xMin)
-                table.insert(calcFormula[spell][rank], 'Max - Improved Renew: ' .. getTalentRank('Improved Renew') .. ' * 5% = ' .. xMax)
+                for tal, inc in pairs({['Improved Renew'] = 5, ['Improved Rejuvenation'] = 5}) do
+                    if getTalentRank(tal) > 0 then
+                        local changeMin = xMin * inc / 100 * getTalentRank(tal)
+                        local changeMax = xMax * inc / 100 * getTalentRank(tal)
+                        xMin = xMin + changeMin
+                        xMax = xMax + changeMax
+                        calcAdd(spell, rank, 'min', tal, xMin, changeMin, getTalentRank(tal) .. '*' .. inc ..  '%')
+                        calcAdd(spell, rank, 'max', tal, xMax, changeMax, getTalentRank(tal) .. '*' .. inc ..  '%')
+                    end
+                end
             end
 
             if stanceHealing > 0 then
                 xMin = xMin + stanceHealing
                 xMax = xMax + stanceHealing
+                calcAdd(spell, rank, 'min', "Tree Form", xMin, stanceHealing,'25% * Spirit')
+                calcAdd(spell, rank, 'max', "Tree Form", xMax, stanceHealing,'25% * Spirit')
             end
 
             local tg = nil

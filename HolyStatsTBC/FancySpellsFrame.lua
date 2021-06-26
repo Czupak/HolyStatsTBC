@@ -185,9 +185,9 @@ function FancySpellsFrame_Init()
     columns[#columns]['sortnext'] = 1
     ScrollingTable = ScrollingTableModule:CreateST(columns, 12, config['ui']['spellsWindowFont'], nil, FancySpellsFrame)
     FancySpellsFrame_Update()
-    --ScrollingTable:RegisterEvents({
-    --    ["OnClick"] = showTooltip
-    --});
+    ScrollingTable:RegisterEvents({
+        ["OnClick"] = showTooltip
+    });
     ScrollingTable.frame:SetMovable(true)
     ScrollingTable:RegisterEvents({
         ["OnMouseDown"] = ScrollingTable_OnMouseDown,
@@ -211,20 +211,14 @@ function FancySpellsFrame_Update()
 end
 
 function showTooltip(rowFrame, cellFrame, data, cols, row, realrow, column, scrollingTable, ...)
-    --[[ handle onclick event here ]]--
+    local columnMap = {'spell', 'rank', 'mark', 'min', 'max', 'avg', 'mana', 'eff', 'hbcoeff', 'hb', 'hbp'}
     if row ~= nil or realrow ~= nil then
         local celldata = data[realrow].cols[column].value;
         local spell = data[realrow].cols[1].value
         local rank = data[realrow].cols[2].value
         local tooltip = nil
-        if column >= 4 and column <= 6 then
-            tooltip = prepareHealingTooltip(spell, rank)
-        elseif column == 7 then
-            tooltip = prepareManaTooltip(spell, rank, data[realrow].cols[7].value)
-        elseif column >= 8 then
-            tooltip = prepareEfficiencyTooltip(spell, rank)
-        end
-        if tooltip ~= nil then
+        if column == 4 or column == 5 or column == 7 or column == 9 or column == 10 then
+            tooltip = prepareHealingTooltip(spell, rank, columnMap[column])
             GameTooltip:ClearLines();
             GameTooltip:SetOwner(cellFrame, "ANCHOR_BOTTOM");
             for _, tt in pairs(tooltip) do
@@ -236,41 +230,13 @@ function showTooltip(rowFrame, cellFrame, data, cols, row, realrow, column, scro
     end
 end
 
-local color = "|cFF00FF00"
-local reset = "|r"
-function prepareHealingTooltip(spell, rank)
+function prepareHealingTooltip(spell, rank, attr)
+    local columnMap = {min = 'min', max = 'max', mana = 'mana', hbcoeff = 'coeff', hb = 'hb'}
     local tt = {}
-    if calcFormula[spell] ~= nil and calcFormula[spell][rank] ~= nil then
-        tt = calcFormula[spell][rank]
+    if calcFormula[spell] ~= nil and calcFormula[spell][rank] ~= nil and calcFormula[spell][rank][columnMap[attr]] ~= nil then
+        tt = calcFormula[spell][rank][columnMap[attr]]
     else
-        table.insert(tt, color .. spell .. reset .. ' ' .. rank)
-        table.insert(tt, "Healing")
-
-    end
-    return tt
-end
-
-function prepareManaTooltip(spell, rank, mana)
-    local tt = {}
-    if calcFormula[spell] ~= nil and calcFormula[spell][rank] ~= nil then
-        tt = calcFormula[spell][rank]
-    else
-        table.insert(tt, color .. spell .. reset .. ' ' .. rank)
-        table.insert(tt, "Mana")
-        table.insert(tt, mana)
-
-    end
-    return tt
-
-end
-
-function prepareEfficiencyTooltip(spell, rank)
-    local tt = {}
-    if calcFormula[spell] ~= nil and calcFormula[spell][rank] ~= nil then
-        tt = calcFormula[spell][rank]
-    else
-        table.insert(tt, color .. spell .. reset .. ' ' .. rank)
-        table.insert(tt, "Eff")
+        table.insert(tt, 'No calc')
     end
     return tt
 end
