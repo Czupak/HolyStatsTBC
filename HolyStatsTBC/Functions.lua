@@ -227,6 +227,41 @@ function getHealingSpells()
     return spells
 end
 
+function calcAdd(spell, rank, attr, source, val, change, desc)
+    local colors = {
+        def  = "|cFF00FF00",
+        inc  = "|cFF00f1ff",
+        desc = '|cFFafabff',
+        reset= "|r"
+    }
+
+    if calcFormula[spell] == nil then
+        calcFormula[spell] = {}
+    end
+    if calcFormula[spell][rank] == nil then
+        calcFormula[spell][rank] = {
+            min = {},
+            max = {},
+            mana = {},
+            hb = {},
+            coeff = {}
+        }
+    end
+    local text = ''
+    if source == 'Base' or change == nil then
+        text = string.format("%s%s:%s %.2f", colors['def'], source, colors['reset'], val)
+    else
+        local sign = '+'
+        if change < 0 then sign = '' end
+        text = string.format("%s%s:%s %s%s%.2f %s= %.2f",
+                colors['def'], source, colors['reset'], colors['inc'], sign, change, colors['reset'], val)
+    end
+    if desc ~= nil and desc ~= "" then
+        text = string.format("%s (%s)", text, desc)
+    end
+    table.insert(calcFormula[spell][rank][attr], text)
+end
+
 function calculateSpells()
     -- Holy Specialization - spell crit %1 * 5
     -- Mental Agility - instant casts 2% * 5
@@ -247,41 +282,6 @@ function calculateSpells()
     --  Not needed:
     --      ['Naturalist'] Reduce cast time of Healing Touch by 0.1s [x1-5]
     --      ['Intensity'] 10% Mana to continue while casting [x1-3]
-    local function calcAdd(spell, rank, attr, source, val, change, desc)
-        local colors = {
-            def  = "|cFF00FF00",
-            inc  = "|cFF00f1ff",
-            desc = '|cFFafabff',
-            reset= "|r"
-        }
-
-        if calcFormula[spell] == nil then
-            calcFormula[spell] = {}
-        end
-        if calcFormula[spell][rank] == nil then
-            calcFormula[spell][rank] = {
-                min = {},
-                max = {},
-                mana = {},
-                hb = {},
-                coeff = {}
-            }
-        end
-        local text = ''
-        if source == 'Base' or change == nil then
-            text = string.format("%s%s:%s %.2f", colors['def'], source, colors['reset'], val)
-        else
-            local sign = '+'
-            if change < 0 then sign = '' end
-            text = string.format("%s%s:%s %s%s%.2f %s= %.2f",
-                    colors['def'], source, colors['reset'], colors['inc'], sign, change, colors['reset'], val)
-        end
-        if desc ~= nil and desc ~= "" then
-            text = string.format("%s (%s)", text, desc)
-        end
-        table.insert(calcFormula[spell][rank][attr], text)
-    end
-
     local stanceHealing = 0
     local stanceManaReduction = 0
     if class == 'DRUID' and GetShapeshiftForm() == 6 then
@@ -393,14 +393,6 @@ function calculateSpells()
             calcAdd(spell, rank, 'min', 'Healing Bonus', xMin, bonusHealingCoeff)
             calcAdd(spell, rank, 'max', 'Healing Bonus', xMax, bonusHealingCoeff)
             -- apply +% for healing spells
-            --xMin = xMin * (1
-            --        + 0.02 * getTalentRank('Spiritual Healing')
-            --        + 0.04 * getTalentRank('Healing Light')
-            --        + 0.02 * getTalentRank('Gift of Nature'))
-            --xMax = xMax * (1
-            --        + 0.02 * getTalentRank('Spiritual Healing')
-            --        + 0.04 * getTalentRank('Healing Light')
-            --        + 0.02 * getTalentRank('Gift of Nature'))
             for tal, inc in pairs({['Spiritual Healing'] = 2, ['Healing Light'] = 4, ['Gift of Nature'] = 2}) do
                 if getTalentRank(tal) > 0 then
                     local changeMin = xMin * inc / 100 * getTalentRank(tal)
@@ -436,6 +428,10 @@ function calculateSpells()
             local tg = nil
             if obj['org']['targets'] ~= nil then
                 tg = obj['org']['targets']
+                calcFormula[spell][rank]['final'] = {
+                    min = xMin,
+                    max = xMax
+                }
             end
             data[class][spell][rank] = {
                 ['Min'] = xMin,

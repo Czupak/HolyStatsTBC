@@ -180,6 +180,14 @@ function FancySpellsFrame_Init()
         if col == 'spell' then
             colsFresh['width'] = 120
         end
+        if col == 'min' or col == 'max' or col == 'mana' or col == 'hbcoeff' or col == 'hb' then
+            colsFresh["bgcolor"] = {
+                ["r"] = 0.0,
+                ["g"] = 0.11,
+                ["b"] = 0.20,
+                ["a"] = 1.0
+            }
+        end      
         table.insert(columns, colsFresh)
     end
     columns[#columns]['sortnext'] = 1
@@ -211,7 +219,7 @@ function FancySpellsFrame_Update()
 end
 
 function showTooltip(rowFrame, cellFrame, data, cols, row, realrow, column, scrollingTable, ...)
-    local columnMap = {'spell', 'rank', 'mark', 'min', 'max', 'avg', 'mana', 'eff', 'hbcoeff', 'hb', 'hbp'}
+    local columnMap = { 'spell', 'rank', 'mark', 'min', 'max', 'avg', 'mana', 'eff', 'hbcoeff', 'hb', 'hbp' }
     if row ~= nil or realrow ~= nil then
         local celldata = data[realrow].cols[column].value;
         local spell = data[realrow].cols[1].value
@@ -231,9 +239,16 @@ function showTooltip(rowFrame, cellFrame, data, cols, row, realrow, column, scro
 end
 
 function prepareHealingTooltip(spell, rank, attr)
-    local columnMap = {min = 'min', max = 'max', mana = 'mana', hbcoeff = 'coeff', hb = 'hb'}
+    local columnMap = { min = 'min', max = 'max', mana = 'mana', hbcoeff = 'coeff', hb = 'hb' }
     local tt = {}
+    local _, class = UnitClass("player");
+    local targets = spell:match(' %(x(%d)%)')
+    spell = spell:gsub(' %(x%d%)', '')
     if calcFormula[spell] ~= nil and calcFormula[spell][rank] ~= nil and calcFormula[spell][rank][columnMap[attr]] ~= nil then
+        if healingSpells[class][spell][rank]['targets'] ~= nil and (attr == 'min' or attr == 'max') and targets then
+            local finalAttr = calcFormula[spell][rank]['final'][attr]
+            calcAdd(spell, rank, attr, 'Targets x' .. targets, finalAttr * targets, finalAttr * (targets - 1))
+        end
         tt = calcFormula[spell][rank][columnMap[attr]]
     else
         table.insert(tt, 'No calc')
