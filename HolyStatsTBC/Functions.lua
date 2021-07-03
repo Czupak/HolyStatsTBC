@@ -541,11 +541,10 @@ end
 
 function getSummaryData()
     local base, casting = GetManaRegen()
-    local delay, regen
+    local delay, regen = "", 0
     if math.floor(base) > 0
     then
         regen = base
-        delay = ""
     else
         delay = "+5s"
     end
