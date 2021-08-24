@@ -691,13 +691,15 @@ function HolyStatsTBC:OnEnable()
         config['ui'] = {}
     end
 
-    for i, key in pairs({ 'mainWindowFont', 'mainWindowAlpha', 'spellsWindowFont', 'mainWindowBGColor', 'mainWindowFontColor', 'mainWindowTemplate' }) do
+    for i, key in pairs({ 'mainWindowFont', 'mainWindowAlpha', 'spellsWindowFont', 'mainWindowBGColor',
+                          'mainWindowFontColor', 'mainWindowTemplate', 'spellsWindowColWidthMP' }) do
         if config['ui'][key] == nil
         then
             if key == 'mainWindowAlpha' then config['ui'][key] = 100
             elseif key == 'mainWindowBGColor' then config['ui'][key] = { 0.2, 0.2, 0.2, 1.0 }
             elseif key == 'mainWindowFontColor' then config['ui'][key] = { 1, 1, 1, 1 }
             elseif key == 'mainWindowTemplate' then config['ui'][key] = defaultTemplate
+            elseif key == 'spellsWindowColWidthMP' then config['ui'][key] = 1
             else
                 config['ui'][key] = 12
             end
@@ -1005,7 +1007,9 @@ function FancySpellsFrame_Init()
         colsFresh["sortnext"] = _ + 1
 
         if col == 'spell' then
-            colsFresh['width'] = 120
+            colsFresh['width'] = 120 *  getColWidthMP()
+        else
+            colsFresh['width'] = colsFresh['width'] *  getColWidthMP()
         end
         if col == 'min' or col == 'max' or col == 'mana' or col == 'hbcoeff' or col == 'hb' then
             colsFresh["bgcolor"] = {
@@ -1028,6 +1032,14 @@ function FancySpellsFrame_Init()
         ["OnMouseDown"] = ScrollingTable_OnMouseDown,
         ["OnMouseUp"] = ScrollingTable_OnMouseUp
     });
+end
+
+function getColWidthMP()
+    return config['ui']['spellsWindowColWidthMP']
+end
+
+function setColWidthMP(val)
+    config['ui']['spellsWindowColWidthMP'] = val
 end
 
 function ScrollingTable_OnMouseDown(self, button)

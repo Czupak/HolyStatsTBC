@@ -94,10 +94,30 @@ function getOptions()
                         width = "full",
                         order = 7,
                     },
+                    spellsWindowColWidthMPSlider = {
+                        type = "range",
+                        name = "Spells Window column width multiplier \n(requires reload)",
+                        order = 8,
+                        min = 1,
+                        max = 5,
+                        step = 0.1,
+                        get = function(info)
+                            return getColWidthMP()
+                        end,
+                        set = function(info, val)
+                            setColWidthMP(val)
+                        end,
+                    },
+                    spacer98 = {
+                        type = "description",
+                        name = " ",
+                        width = "full",
+                        order = 98,
+                    },
                     resetButton = {
                         type = "execute",
                         name = "Reset window size and position",
-                        order = 7,
+                        order = 99,
                         func = function()
                             resetPosition()
                         end,
