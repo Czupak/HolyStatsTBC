@@ -103,8 +103,18 @@ function getEffSpell()
     return config['effSpell']
 end
 
+function classCheck()
+    if healingSpells[class] == nil then
+        return false
+    end
+    return true
+end
+
 function getHealingSpells()
     local spells = {}
+    if not classCheck() then
+        return spells
+    end
     local i = 1
     while true do
         local spellName, spellSubName = GetSpellBookItemName(i, BOOKTYPE_SPELL)
@@ -164,6 +174,9 @@ function calculateSpells()
     end
     calcFormula = {}
     local data = healingSpells
+    if not classCheck() then
+        return
+    end
     for spell, ranks in pairs(healingSpells[class])
     do
         for rank, obj in pairs(ranks)
@@ -481,6 +494,9 @@ function getClassTalents()
             ['Tree of Life'] = { 3, 20, 1 }
         }
     }
+    if not classCheck() then
+        return {}
+    end
     return talents[class]
 end
 
@@ -713,12 +729,16 @@ function HolyStatsTBC:OnEnable()
             table.insert(config['spellMarks'], { name = '', avg = 99999999 })
         end
     end
-    pauseUpdate = false
-    HolyStats_OnLoad(HolyStats)
-    FancySpellsFrame_Init()
-    SpellsFrameConfig_OnLoad(SpellsFrameConfig)
-    HolyStatsFrame:SetScript("OnUpdate", HolyStats_OnUpdate)
-    setupOptions()
+    if classCheck() then
+        pauseUpdate = false
+        HolyStats_OnLoad(HolyStats)
+        FancySpellsFrame_Init()
+        SpellsFrameConfig_OnLoad(SpellsFrameConfig)
+        HolyStatsFrame:SetScript("OnUpdate", HolyStats_OnUpdate)
+        setupOptions()
+    else
+        pauseUpdate = true
+    end
 end
 
 function HolyStats_OnLoad(self)
@@ -1090,7 +1110,9 @@ end
 function prepareHealingTooltip(spell, rank, attr)
     local columnMap = { min = 'min', max = 'max', mana = 'mana', hbcoeff = 'coeff', hb = 'hb' }
     local tt = {}
-    local _, class = UnitClass("player");
+    if not classCheck() then
+        return tt
+    end
     local targets = spell:match(' %(x(%d)%)')
     spell = spell:gsub(' %(x%d%)', '')
     if calcFormula[spell] ~= nil and calcFormula[spell][rank] ~= nil and calcFormula[spell][rank][columnMap[attr]] ~= nil then

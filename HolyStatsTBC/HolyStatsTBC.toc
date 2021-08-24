@@ -2,7 +2,7 @@
 ## Title: HolyStats TBC
 ## Notes: MP5, Healing Bonus and detailed Healing Spells' stats for Priests, Palas and Druids.
 ## Author: Czupak
-## Version: 1.17.1
+## Version: 1.17.2
 ## SavedVariablesPerCharacter: myIgnoredSpells config
 embeds.xml
 HealingSpells.lua
