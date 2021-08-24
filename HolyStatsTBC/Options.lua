@@ -108,6 +108,26 @@ function getOptions()
                             setColWidthMP(val)
                         end,
                     },
+                    spacer3 = {
+                        type = "description",
+                        name = " ",
+                        width = "full",
+                        order = 9,
+                    },
+                    spellsWindowColHeightMPSlider = {
+                        type = "range",
+                        name = "Spells Window column height multiplier \n(requires reload)",
+                        order = 10,
+                        min = 1,
+                        max = 5,
+                        step = 0.1,
+                        get = function(info)
+                            return getColHeightMP()
+                        end,
+                        set = function(info, val)
+                            setColHeightMP(val)
+                        end,
+                    },
                     spacer98 = {
                         type = "description",
                         name = " ",

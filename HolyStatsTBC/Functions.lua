@@ -692,7 +692,8 @@ function HolyStatsTBC:OnEnable()
     end
 
     for i, key in pairs({ 'mainWindowFont', 'mainWindowAlpha', 'spellsWindowFont', 'mainWindowBGColor',
-                          'mainWindowFontColor', 'mainWindowTemplate', 'spellsWindowColWidthMP' }) do
+                          'mainWindowFontColor', 'mainWindowTemplate', 'spellsWindowColWidthMP',
+                          'spellsWindowColHeightMP' }) do
         if config['ui'][key] == nil
         then
             if key == 'mainWindowAlpha' then config['ui'][key] = 100
@@ -700,6 +701,7 @@ function HolyStatsTBC:OnEnable()
             elseif key == 'mainWindowFontColor' then config['ui'][key] = { 1, 1, 1, 1 }
             elseif key == 'mainWindowTemplate' then config['ui'][key] = defaultTemplate
             elseif key == 'spellsWindowColWidthMP' then config['ui'][key] = 1
+            elseif key == 'spellsWindowColHeightMP' then config['ui'][key] = 1
             else
                 config['ui'][key] = 12
             end
@@ -1022,7 +1024,7 @@ function FancySpellsFrame_Init()
         table.insert(columns, colsFresh)
     end
     columns[#columns]['sortnext'] = 1
-    ScrollingTable = ScrollingTableModule:CreateST(columns, 12, config['ui']['spellsWindowFont'], nil, FancySpellsFrame)
+    ScrollingTable = ScrollingTableModule:CreateST(columns, 12, config['ui']['spellsWindowFont'] * getColHeightMP(), nil, FancySpellsFrame)
     FancySpellsFrame_Update()
     ScrollingTable:RegisterEvents({
         ["OnClick"] = showTooltip
@@ -1040,6 +1042,14 @@ end
 
 function setColWidthMP(val)
     config['ui']['spellsWindowColWidthMP'] = val
+end
+
+function getColHeightMP()
+    return config['ui']['spellsWindowColHeightMP']
+end
+
+function setColHeightMP(val)
+    config['ui']['spellsWindowColHeightMP'] = val
 end
 
 function ScrollingTable_OnMouseDown(self, button)
